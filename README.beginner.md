@@ -97,10 +97,14 @@ Once set up, you don't need to repeat any of the above. Just run these commands 
 | Command | What it does | How often |
 |---|---|---|
 | `/scrape` | Looks for new job postings across job sites and your inbox | Every few days, or whenever you're checking in |
+| `/rank` | Sorts what `/scrape` found into a shortlist, best fit first | Right after `/scrape`, before you pick what to apply to |
 | `/apply <paste a job link or the job text>` | Checks if it's a good fit, then drafts you a tailored CV and cover letter to review | Whenever a job catches your eye |
+| `/interview` | Preps talking points and likely questions for a specific interview, using the exact posting and CV it saw | Once you've got an interview scheduled |
 | `/outcome` | Tell it what happened (interview, rejection, offer) so it keeps your tracker up to date | After you hear back from a company |
+| `/gmail-sync` | Reads your inbox for status updates (interview, offer, rejection) and proposes the same tracker update as `/outcome` — for you to approve, never written without your OK | Whenever you'd rather it check your inbox than type the update yourself |
+| `/html-report` | Turns your tracker into a simple offline dashboard you can open in a browser | Whenever you want a visual overview of everything you've applied to |
 
-That's genuinely most of it. A few extra commands exist for more advanced use (interview prep, syncing your status automatically from Gmail, etc.) — see the [full README](README.md) if you want to go further.
+That's genuinely most of it — a handful of other commands exist for more advanced use, see the [full README](README.md) if you want to go further.
 
 ## Good to know
 
