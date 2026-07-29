@@ -51,5 +51,5 @@ At this baseline the framework provides:
 - **Cross-runtime support** - a root `AGENTS.md` pointer so Codex and Antigravity can
   discover the portable portal skills, with Claude Code as the reference runtime.
 
-[Unreleased]: https://github.com/MadsLorentzen/ai-job-search/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/MadsLorentzen/ai-job-search/releases/tag/v1.0.0
+[Unreleased]: https://github.com/frJEN/ai-job-search-au-starter/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/frJEN/ai-job-search-au-starter/releases/tag/v1.0.0

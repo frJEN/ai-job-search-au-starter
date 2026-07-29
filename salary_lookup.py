@@ -10,6 +10,11 @@ This tool requires a data file (salary_data.json) that you create
 from your own salary data. See tools/README_SALARY_TOOL.md for
 instructions on the expected format and how to convert from Excel.
 
+Scope note: this powers the optional Salary Benchmark check only
+(04-job-evaluation.md #7). The always-on Salary Floor check (#6,
+posting rate vs. minimum-wage/award standard) is a pure judgment call
+against posting text and never calls this tool.
+
 Usage:
     python salary_lookup.py "Company Name"
     python salary_lookup.py "Company Name" --city "København"
