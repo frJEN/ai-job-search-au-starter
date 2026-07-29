@@ -96,9 +96,9 @@ Seek, Indeed, and Jora are not scraped directly (see `search-queries.md` for why
    deliveredto:[YOUR_EMAIL] in:inbox newer_than:14d {from:jobalerts-noreply@linkedin.com from:jobalert.indeed.com from:match.indeed.com from:s.seek.com.au from:jora.com from:no-reply@fuserecruitment.com}
    ```
    (Extend the sender OR-group as more platform senders are confirmed in `gmail-alert-sources.md`.)
-4. Call `search_threads` (`view: THREAD_VIEW_MINIMAL`, `pageSize: 50`), filter out threads whose subject matches a documented noise pattern (alert-creation receipts, marketing), then `get_thread` (`messageFormat: FULL_CONTENT`) on the remainder to get full bodies — classification requires the actual body, not the snippet.
+4. Call `search_threads` (`view: THREAD_VIEW_MINIMAL`, `pageSize: 50`), filter out threads whose subject matches a documented noise pattern (alert-creation receipts, marketing), then `get_thread` (`messageFormat: FULL_CONTENT`) on the remainder to get full bodies — classification requires the actual body, not the snippet. These per-thread fetches are independent of each other; run them in parallel where possible, same as Step 1b's CLI calls.
 5. Parse each remaining message per its platform's documented anchors in `gmail-alert-sources.md`, extracting one result per job: `title`, `company`, `location` (if present), `url`, `date` (if present, else null).
-6. For a LinkedIn alert email, extract the numeric ID from the `jobs/view/<id>` URL and feed it to the existing `linkedin-search` CLI's `detail <id>` command for the full description — no separate parsing logic needed for LinkedIn detail.
+6. For a LinkedIn alert email, extract the numeric ID from the `jobs/view/<id>` URL and feed it to the existing `linkedin-search` CLI's `detail <id>` command for the full description — no separate parsing logic needed for LinkedIn detail. When a run surfaces multiple LinkedIn alert emails, run these `detail` lookups in parallel too.
 7. Feed every result into the same pool as Step 1b's CLI results, tagged `"portal": "gmail:<platform>"` (`gmail:linkedin`, `gmail:indeed`, `gmail:seek`, `gmail:jora`, `gmail:fuse`, `gmail:synergie`) so Step 4's dedup and Step 4.75's health check apply unchanged.
 
 ### Step 2: Fetch & Parse

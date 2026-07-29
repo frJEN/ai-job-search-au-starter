@@ -25,6 +25,7 @@ This command signs into live accounts on real job platforms — under **your own
 1. Confirm the candidate profile is populated: `01-candidate-profile.md` and `CLAUDE.md`'s Candidate Profile section should not still contain `[PLACEHOLDER]` tokens. If they do, stop and point the user at `/setup`.
 2. Confirm `CLAUDE.md`'s `[YOUR_EMAIL]` placeholder has been replaced with a real address (see `SETUP.md` step 5 — this is the address every alert set up below will point to, and the same address `/scrape`'s Gmail step reads). If it's still a placeholder, stop and point the user there.
 3. Resolve the target role and location: read `search-queries.md`'s Priority 1 category and `04-job-evaluation.md`'s career goals, unless `$ARGUMENTS` supplies an explicit override for this run.
+4. Read the master CV (`cv/main_example.tex`, or whichever tailored CV is most current) alongside `01-candidate-profile.md` — once, here. Step 2 reuses both across every platform iteration; never re-read either mid-loop.
 
 ---
 
@@ -41,16 +42,16 @@ This command signs into live accounts on real job platforms — under **your own
 
 ## Step 2: Per-Platform Refinement and Alert Setup
 
-Default platform list (skip any not relevant, or restrict to one via `$ARGUMENTS`):
+Default platform list (skip any not relevant, or restrict to one via `$ARGUMENTS`). Both this table's paths and the Manual Alternative section below point back to this single source — the paths themselves live here, not repeated in either place:
 
-| Platform | Has an editable candidate profile | Has self-serve job alerts |
+| Platform | Profile/registration area | Alert creation area |
 |---|---|---|
-| LinkedIn | Yes | Yes |
-| Seek | Yes | Yes |
-| Indeed | Yes | Yes |
-| Jora | No (aggregator, no candidate account) | Yes |
-| Fuse Recruitment | Candidate registration, not a full profile | Uncertain — investigate live |
-| Synergie | Candidate registration, not a full profile | Uncertain — investigate live |
+| LinkedIn | Profile → edit headline/About | Jobs → job search → "Get notified about new jobs" |
+| Seek | Profile → career summary/headline, upload resume | Search results → "Create Alert" (or Account → Job Alerts) |
+| Indeed | Home → resume/headline | Search results → "Get new jobs for this search by email" toggle |
+| Jora | No account/profile — aggregator only | Search results → "Get new jobs by email" signup |
+| Fuse Recruitment | Candidate registration (upload CV) | Uncertain — investigate live, may be a "register your interest" or subscription checkbox rather than a dedicated alerts feature |
+| Synergie | Candidate registration (upload CV) | Uncertain — investigate live, same caveat as Fuse |
 
 For each platform in scope, in turn:
 
@@ -68,7 +69,7 @@ For Fuse/Synergie: if a registration form exists and hasn't been completed, prop
 
 ### 2c. Set up the job alert
 
-Navigate to the platform's alert-creation flow (LinkedIn: Jobs → job search → "Get notified"; Seek/Indeed: search results → alert toggle, or account settings → Job alerts; Jora: the email-alert signup on its search results page; Fuse/Synergie: investigate live — may be a "register your interest" or subscription checkbox rather than a dedicated alerts feature). Fill in the target role, location, and the configured email address; set a reasonable frequency (daily, where offered). **Show the filled form and get explicit confirmation before saving/submitting.**
+Navigate to the platform's alert creation area (per the table above). Fill in the target role, location, and the configured email address; set a reasonable frequency (daily, where offered). **Show the filled form and get explicit confirmation before saving/submitting.**
 
 ### 2d. Handle anything that can't be completed
 
@@ -84,14 +85,11 @@ Report, per platform: what was changed (or would have been, if declined), whethe
 
 ## Manual Alternative
 
-Prefer not to use the automated path, or want to finish something Step 2 flagged? The identical outcome, done by hand — all pointed at the same email address configured in `CLAUDE.md`:
+Prefer not to use the automated path, or want to finish something Step 2 flagged? Same outcome, done by hand, using Step 2's table for where to go on each platform:
 
-- **LinkedIn** — Go to your profile → edit your headline/About section to reflect the target role, using language from your CV. Then Jobs → search the target role and location → toggle "Get notified about new jobs" (or the equivalent alert bell on the search results page) → confirm the alert email.
-- **Seek** — Sign in → Profile → update your career summary/headline and upload your current resume. Then search the target role and location → use the "Create Alert" option on the results page (or Account → Job Alerts) → set frequency and confirm the email.
-- **Indeed** — Sign in → Home → update your resume/headline under your profile. Then search the target role and location → toggle "Get new jobs for this search by email" → confirm the email.
-- **Jora** — Search the target role and location on jora.com.au → use the "Get new jobs by email" signup on the results page → enter the target email and confirm (no account/profile step — Jora doesn't have one).
-- **Fuse Recruitment** — Go to fuserecruitment.com → register as a candidate (upload your CV) → look for a "register your interest" or job-alert subscription option and opt in with the target email; if none is offered, check back periodically instead.
-- **Synergie** — Go to synergieaustralia.com.au → register as a candidate (upload your CV) → opt into any available email updates/job-alert subscription with the target email; if none is offered, check back periodically instead.
+1. Open the platform (linkedin.com, seek.com.au, au.indeed.com, au.jora.com, fuserecruitment.com, or synergieaustralia.com.au) and sign in.
+2. If it has an editable profile (per the table), update it using language from your CV/`01-candidate-profile.md` to reflect the target role.
+3. Go to the platform's alert creation area (per the table) and create an alert for the target role and location, sent to the email address configured in `CLAUDE.md`.
 
 ---
 

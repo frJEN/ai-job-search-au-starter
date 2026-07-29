@@ -321,7 +321,7 @@ Check whether the posting or the portal it came from asks for free-text fields t
 
 ## Step 7: Generate Application Packet (for Claude in Chrome / manual form-filling)
 
-Claude Code has no browser automation of its own — actually filling out the web form on the job platform needs either the user typing it in themselves, or the **Claude in Chrome** browser extension acting on their behalf. Either way, the bottleneck is having the right answers assembled in one place rather than re-derived per field. This step builds that packet automatically, every time, so the only manual work left is a final human review before hitting submit.
+Claude Code has no browser automation of its own — actually filling out the web form on the job platform needs either the user typing it in themselves, or the **Claude in Chrome** browser extension acting on their behalf. Either way, the bottleneck is having the right answers assembled in one place rather than re-derived per field. This step builds that packet automatically, every time.
 
 Run this unconditionally after Step 6 — it does not need separate confirmation, since it only packages content the user has already reviewed in Steps 1–6.
 
@@ -377,9 +377,9 @@ marked "ask the user," pause and ask rather than guessing. **Stop before clickin
 completed form for the user's final review and let them submit it themselves.
 ```
 
-Present a short summary to the user: the packet's file path, and that it's ready to hand to Claude in Chrome (or use for manual entry) — final submission is always a human action, never automated by this workflow.
+Present a short summary to the user: the packet's file path, and that it's ready to hand to Claude in Chrome (or use for manual entry).
 
 ### Next Steps
-- **Ready to apply?** Open `documents/applications/<company>_<role>/application_packet.md` and hand it to Claude in Chrome, or fill the form manually — either way, review the completed form yourself before submitting.
+- **Ready to apply?** Open `documents/applications/<company>_<role>/application_packet.md` and hand it to Claude in Chrome, or fill the form manually.
 - **Submitted?** `/outcome <company>` logs it in the tracker and starts the per-application record that `/setup` later uses to calibrate the fit framework.
 - **Interview scheduled?** `/interview` builds a stage-specific prep pack from this posting and the documents you just created.

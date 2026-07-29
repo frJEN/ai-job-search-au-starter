@@ -189,7 +189,7 @@ This isn't optional boilerplate: every Gmail query this repo builds is hard-scop
 
 Gmail is the one built-in, fully automated path this repo ships — genuinely the easy option, one click in claude.ai's Connectors settings.
 
-**Using Outlook instead?** Anthropic's official [Claude for Outlook](https://support.claude.com/en/articles/14855664-use-claude-for-outlook) add-in is invoked only inside Outlook's own ribbon UI and has no MCP/tool-call interface — it cannot power `/gmail-sync` or `/scrape`'s automation no matter whose account it's installed on. Its own documentation is oriented around a Microsoft 365 work/school account and IT-admin-consent deployment; check Microsoft AppSource for the current word on whether a personal outlook.com/hotmail/live account is supported at all. A real, Claude-Code-callable alternative exists as an **optional, advanced, self-directed path**: a self-hosted community MCP server (Azure App Registration required) — see step 5a below. It's real and powerful, the same relationship `/add-portal` has to the core workflow: entirely opt-in, more technical, and not required.
+**Using Outlook instead?** See `CLAUDE.md`'s Account Restriction section for why Anthropic's official Claude for Outlook add-in can't power `/gmail-sync`/`/scrape`'s automation. A real, Claude-Code-callable alternative exists as an **optional, advanced, self-directed path** — step 5a below — the same relationship `/add-portal` has to the core workflow: entirely opt-in, more technical, and not required.
 
 Whichever mailbox you use, **connect exactly one** — the single-mailbox restriction is what actually matters, not the provider.
 

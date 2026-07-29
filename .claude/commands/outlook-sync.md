@@ -78,17 +78,7 @@ For each returned message, check its ID against `state.processed_message_ids`. S
 
 ## Step 5: Classify Each Unprocessed Message
 
-Identical classification table to `gmail-sync.md`'s Step 5 — first match to one open application (normalized sender domain / display name / subject / body against the company names from Step 3; no confident match → "unmatched," never guessed), then classify by content:
-
-| Signal | Example phrasing | Tracker `status` | `outcome.md` action |
-|---|---|---|---|
-| Application ack | "we've received your application" | *(no change)* | *(no change)* |
-| OA / assessment | "online assessment", "coding challenge", "complete your assessment" | `interview` | Tick nearest matching stage checkbox |
-| Interview invite/scheduled | "schedule a call", "phone screen", "technical interview", "next round", "onsite", "final round" | `interview` | Tick the matching stage checkbox with the email's date |
-| Offer extended | "pleased to offer", "extend an offer", "offer letter" | `offer` | Tick "Offer received" checkbox. **Never propose `hired` or `offer_declined`** — flag prominently for the user's decision. |
-| Rejection | "moving forward with other candidates", "not selected", "unable to proceed", "decided not to continue" | `rejected` | Set `Status: rejected`, `Date resolved:` to the email's date |
-
-**Conflict rule:** a signal contradicting an already-final or already-written status is a manual-review flag, never a proposed overwrite.
+Same as `gmail-sync.md`'s Step 5, in full — the signal/status/`outcome.md`-action table, the match-first-then-classify order, and the conflict rule. See there rather than duplicating it here.
 
 ---
 
