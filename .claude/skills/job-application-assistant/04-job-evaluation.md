@@ -32,7 +32,7 @@ A role that fails this gate is not scored and not drafted. Everything below appl
 
 ## Scoring Dimensions
 
-Evaluate each job posting against these five dimensions:
+Evaluate each job posting against these five dimensions, plus the two salary checks below:
 
 ### 1. Technical Skills Match (0-100)
 How well do the required/preferred skills align with the candidate's capabilities?
@@ -144,6 +144,7 @@ Present the evaluation as:
 | Experience Match | XX/100 | [brief note] |
 | Behavioral Fit | XX/100 | [brief note] |
 | Location | PASS/FAIL | [brief note] |
+| Salary Floor | OK/FLAGGED | [brief note, e.g. "below Fair Work award for this role" - omit row if the posting states no salary/rate] |
 | Career Alignment | XX/100 | [brief note] |
 
 **Overall Score: XX/100** (weighted average of scored dimensions)
@@ -173,7 +174,7 @@ Present the evaluation as:
 - Behavioral Fit: 15%
 - Career Alignment: 30%
 
-(Location is pass/fail, not weighted)
+(Location is pass/fail, not weighted; Salary Floor is a flag, not weighted)
 
 ## Thresholds
 - **Strong Fit** (75+): Definitely apply, tailor everything

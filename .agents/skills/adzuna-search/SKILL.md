@@ -66,6 +66,7 @@ Key flags:
 - `--permanent` — only permanent jobs.
 - `--exclude <text>` — keywords to exclude.
 - `--page <n>` — page number (1-indexed).
+- `--results-per-page <n>` — results per page (Adzuna's own default applies if omitted).
 - `--limit <n>` / `-n <n>` — cap total results emitted (client-side).
 - `--format json|table|plain` — default `json`.
 

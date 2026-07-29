@@ -10,6 +10,11 @@ This tool requires a data file (salary_data.json) that you create
 from your own salary data. See tools/README_SALARY_TOOL.md for
 instructions on the expected format and how to convert from Excel.
 
+Scope note: this powers the optional Salary Benchmark check only
+(04-job-evaluation.md #7). The always-on Salary Floor check (#6,
+posting rate vs. minimum-wage/award standard) is a pure judgment call
+against posting text and never calls this tool.
+
 Usage:
     python salary_lookup.py "Company Name"
     python salary_lookup.py "Company Name" --city "København"
@@ -32,12 +37,16 @@ SPELLING_VARIANTS = {
     "ö": "o", "ä": "ae", "ü": "u",
 }
 
-# Legal suffixes and noise to strip when matching company names
+# Legal suffixes and noise to strip when matching company names.
+# Danish/Nordic (a/s, aps, ...) and Australian (pty ltd, ltd, ...) suffixes
+# both need stripping since salary_data.json may contain either market's names.
 STRIP_PATTERNS = [
     r"\ba/s\b", r"\baps\b", r"\bi/s\b", r"\bp/s\b", r"\bk/s\b",
     r"\bivs\b", r"\bamba\b", r"\ba\.m\.b\.a\.\b",
+    r"\bpty\s+ltd\b", r"\bpty\b", r"\bltd\b", r"\blimited\b",
     r"\(vg\)", r"\(.*?\)",  # (VG) and other parentheticals
     r"\bdanmark\b", r"\bdenmark\b", r"\bscandinavia\b", r"\bnordic\b",
+    r"\baustralia\b",
     r"\bgroup\b", r"\bholding\b",
     r",\s*.*$",  # everything after comma (sub-entities)
 ]
@@ -413,7 +422,7 @@ def main():
         if args.city:
             print(f"  (filtered by city: {args.city})")
         print("\nTry a shorter or different name. Company names in the dataset")
-        print("may include legal suffixes like 'A/S' or 'ApS'.")
+        print("may include legal suffixes like 'A/S', 'ApS', 'Pty Ltd', or 'Ltd'.")
         sys.exit(1)
 
     if args.json:

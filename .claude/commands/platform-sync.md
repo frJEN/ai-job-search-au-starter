@@ -69,7 +69,7 @@ For Fuse/Synergie: if a registration form exists and hasn't been completed, prop
 
 ### 2c. Set up the job alert
 
-Navigate to the platform's alert creation area (per the table above). Fill in the target role, location, and the configured email address; set a reasonable frequency (daily, where offered). **Show the filled form and get explicit confirmation before saving/submitting.**
+Navigate to the platform's alert-management area first (most platforms list existing alerts there) and check whether one already matches this run's target role, location, **and the email address configured in Step 0.2**. An alert for the right role/location but pointed at a different or older email does not count as a match - it means `/scrape`'s Gmail ingestion would never see results from it, so create the correct one instead of skipping. If a genuinely matching alert already exists, skip creating a duplicate and note it as "already exists" in the Step 3 summary instead. Otherwise, navigate to the alert creation area (per the table above). Fill in the target role, location, and the configured email address; set a reasonable frequency (daily, where offered). **Show the filled form and get explicit confirmation before saving/submitting.**
 
 ### 2d. Handle anything that can't be completed
 
@@ -89,7 +89,7 @@ Prefer not to use the automated path, or want to finish something Step 2 flagged
 
 1. Open the platform (linkedin.com, seek.com.au, au.indeed.com, au.jora.com, fuserecruitment.com, or synergieaustralia.com.au) and sign in.
 2. If it has an editable profile (per the table), update it using language from your CV/`01-candidate-profile.md` to reflect the target role.
-3. Go to the platform's alert creation area (per the table) and create an alert for the target role and location, sent to the email address configured in `CLAUDE.md`.
+3. Check the platform's alert-management area for an existing alert matching your target role, location, **and email address** first (same check as Step 2c) — only create a new one at the alert creation area (per the table) if none exists, sent to the email address configured in `CLAUDE.md`.
 
 ---
 
