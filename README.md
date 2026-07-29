@@ -8,7 +8,7 @@
 
 **Read this in:** English (this page) · [Plain-English beginner guide](README.beginner.md) · [中文](README.zh.md)
 
-> If this project is useful to you, a ⭐ star on GitHub helps others find it — and if you'd like to support development directly, that's always appreciated too: [Buy Me a Coffee](https://buymeacoffee.com/frJEN) · [爱发电 Afdian](https://afdian.com/a/frJEN). Totally optional either way — enjoy the tool.
+> If this project is useful to you, a ⭐ star on GitHub helps others find it and would mean a great deal to me, thanks for your support!
 
 An AI-powered job application framework built on [Claude Code](https://claude.com/claude-code). Fill in your profile, and let Claude evaluate job postings, tailor your CV, write cover letters, and prepare you for interviews — with Australia-specific job discovery built in.
 
@@ -18,37 +18,45 @@ An AI-powered job application framework built on [Claude Code](https://claude.co
 
 ## What this is
 
-This is a fork of [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search) — a structured workflow that turns Claude Code into a full-stack job application assistant (self-profiling, fit evaluation, and a drafter-reviewer CV/cover-letter pipeline). The core workflow is language- and country-agnostic.
+An AI-powered job application framework built on [Claude Code](https://claude.com/claude-code) that runs the whole job-hunt loop for you: build your profile once, then search for jobs, evaluate fit, draft a tailored CV and cover letter, prep for interviews, and track outcomes — with an agent doing the busywork at every stage while you stay in control of what actually gets sent.
+
+**The core lifecycle:** `/setup` → `/scrape` → `/rank` → `/apply` → `/interview` → `/outcome`, calibrating back into `/setup` as you learn what's working. Around that loop: `/gmail-sync` keeps your tracker current by reading your inbox, `/html-report` gives you a dashboard, `/expand` and `/upskill` grow your profile and close skill gaps, and `/add-template`/`/add-portal` let you customize the framework's templates and job sources. Every stage of a real job hunt has an owner — see [Other commands](#other-commands) for the full set.
+
+This particular repo ([frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter)) is a fork of [MadsLorentzen/ai-job-search](https://github.com/MadsLorentzen/ai-job-search) — the upstream framework, which is language- and country-agnostic by design.
 
 **This fork adds Australia-specific job discovery on top of that core:**
 - **`adzuna-search`** — an official, key-based CLI against the [Adzuna](https://developer.adzuna.com/) Job Search API for independent Australian job coverage.
 - **Gmail job-alert ingestion** — Seek, Indeed, Jora, Fuse Recruitment, and Synergie block or don't offer automated scraping, so instead `/scrape` reads the job-alert emails these platforms already send to your own inbox, via the official Gmail connector. Hard-scoped to the one mailbox you connect — see `CLAUDE.md`'s Account Restriction section.
-- **`/platform-sync`** — refines your profile on each of those platforms and sets up the job alerts above for you, via the [Claude in Chrome](https://claude.com/blog/claude-in-chrome) extension acting in your own signed-in browser session. Read its caution notes before using — see [Quick start](#quick-start-no-git-no-github-account-needed) step 8.
+- **`/platform-sync`** — refines your profile on each of those platforms and sets up the job alerts above for you, via the [Claude in Chrome](https://claude.com/blog/claude-in-chrome) extension acting in your own signed-in browser session. Read its caution notes before using — see [Quick start](#quick-start) step 8.
 - **Application packets** — `/apply` now also generates a bundled `application_packet.md` (contact fields, screening-question answers, document paths, cover letter text) so Claude in Chrome — or you, manually — can fill out the actual application form without re-typing everything. Final submission is always a human action, never automated.
 
 ```
-/setup       /platform-sync      /scrape              /apply <url>
-  |                |                |                     |
-  v                v                v                     v
-Fill in        Refine profile   Search job           Evaluate fit
-your profile   on each platform portals              Score & recommend
-  |            + set up alerts      |                     |
-  v                v                v                     v
-Profile        Alerts flowing   Present matches      Draft CV + Cover Letter
-files ready    to your inbox    with fit ratings     (LaTeX, tailored)
-                                    |                     |
-                                    v                     v
-                               Pick a match         Reviewer agent critiques
-                               -> /apply            -> Revise -> Package -> Final output
+/setup → /platform-sync → /scrape → /rank → /apply <url> → /interview → /outcome → (calibrates back into /setup)
+   |            |             |         |          |             |             |
+profile      alerts set    job       ranked     tailored CV    talking       record what
+built        up, flowing   matches   shortlist  + cover letter, points from  happened;
+             to your                            reviewer agent  the exact    tracker +
+             inbox                               critiques,     posting +    outcome.md
+                                                  final output   docs read    updated
+
+Anytime, on demand:
+  /gmail-sync   — reads your inbox for status signals (interviews, offers, rejections) on tracked
+                  applications and proposes tracker updates for you to approve
+  /html-report  — turns your tracker into an offline HTML dashboard
 ```
 
-## Quick start (no git, no GitHub account needed)
+## Quick start
 
 ### 1. Get the code
 
-Go to [github.com/frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter), click the green **Code** button, choose **Download ZIP**, and unzip it somewhere on your computer. That's it — no `git clone`, no GitHub account.
+```bash
+git clone https://github.com/frJEN/ai-job-search-au-starter.git
+cd ai-job-search-au-starter
+```
 
-*(Comfortable with git? `gh repo fork frJEN/ai-job-search-au-starter --clone` or the ordinary GitHub fork-and-clone works too — see [SETUP.md](SETUP.md) for the git path.)*
+Don't have git? [Install it](https://git-scm.com/downloads) — a two-minute download on any OS.
+
+*(Want to contribute back, or track your own changes over time? Fork first — `gh repo fork frJEN/ai-job-search-au-starter --clone` — then clone your fork instead. See [SETUP.md](SETUP.md) for the full git path.)*
 
 ### 2. Install Claude Code
 
@@ -57,9 +65,10 @@ Follow the [Claude Code install guide](https://docs.anthropic.com/en/docs/claude
 ### 3. Open the folder in Claude Code
 
 ```bash
-cd path/to/ai-job-search-au-starter
 claude
 ```
+
+(You're already in the folder from step 1.)
 
 ### 4. Let Claude Code install the rest
 
@@ -115,7 +124,7 @@ Postings are treated as untrusted input (the workflow follows no instructions em
 
 ## Other commands
 
-`/setup`, `/scrape`, and `/apply` form the core workflow. More commands extend it once your profile is in place:
+`/setup` → `/scrape` → `/rank` → `/apply` → `/interview` → `/outcome` form the core workflow described above. More commands extend it once your profile is in place:
 
 - **`/platform-sync`** refines your profile on LinkedIn/Seek/Indeed and sets up job alerts across LinkedIn/Seek/Indeed/Jora/Fuse Recruitment/Synergie via Claude in Chrome — read its caution notes first; it also documents a manual alternative.
 - **`/interview`** preps you for a scheduled interview on a tracked application, using the exact posting, CV, and cover letter the interviewer read.
