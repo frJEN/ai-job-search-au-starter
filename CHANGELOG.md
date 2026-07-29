@@ -11,6 +11,34 @@ prefer updating to a tagged release over pulling raw `master` (see
 files a release touched; `python3 tools/check_upstream_updates.py` lists them with
 per-file diff commands.
 
+## Fork-Specific Changes
+
+Changes specific to this fork (`frJEN/ai-job-search-au-starter`), tracked separately from
+the sections below since they're not part of upstream's release versioning.
+
+- **Security policy repointed at this fork** - vulnerability reports and `FUNDING.yml`
+  now point at this repo instead of upstream.
+- **LICENSE** - credits AU-specific contributions alongside the original copyright.
+- **Removed `CONTRIBUTING.md`** - it described upstream's contribution process, not this
+  fork's.
+- **CI** - `adzuna-search` added to the CLI test matrix; `dependency-review` no longer
+  gated to the upstream repo name, so it runs on this fork too.
+- **`salary_lookup.py`: Australian legal suffixes** - `STRIP_PATTERNS` now strips
+  `Pty Ltd`/`Pty`/`Ltd`/`Limited` and an `Australia` noise-word, alongside the existing
+  Danish/Nordic ones, so AU company names fuzzy-match correctly. This powers the optional
+  Salary Benchmark check only.
+- **Salary Floor check wired into presentation** - the always-on salary-floor flag
+  (posting rate vs. minimum-wage/award standard) now actually surfaces in both `/apply`'s
+  evaluation output and `/rank`'s triage shortlist - previously computed but dropped
+  before either command's output.
+- **`/platform-sync`: duplicate-alert guard** - skips creating a job alert that already
+  exists for the same platform, role, location, and target email.
+- **`/gmail-sync`: first-run security notice** - explains the read-only, untrusted-content
+  scope of inbox scanning before the first run, and recommends a `CLAUDE.md` restriction
+  for handing off sensitive, unrelated content unprocessed.
+- **Docs consistency** - Gmail platform count, donate link, and Outlook framing corrected
+  across `README.md`, `README.beginner.md`, and `README.zh.md`.
+
 ## [Unreleased]
 
 - **freehire-search: full descriptions come back with the search** - `search` now calls
