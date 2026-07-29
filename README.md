@@ -4,7 +4,7 @@
 
 # AI Job Search — Australia Starter
 
-*The job search that runs on your machine, tuned for the Australian market.*
+*The job search that runs on your machine, tuned for the Australian market. Super user friendly for  non-technical users, workflow predominantly automated.*
 
 **Read this in:** English (this page) · [Plain-English beginner guide](README.beginner.md) · [中文](README.zh.md)
 
