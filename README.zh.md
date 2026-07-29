@@ -39,24 +39,28 @@
 
 按顺序做完以下步骤,只需要做一次。凡是提示"输入这句话"的地方,都是指打开 Claude Code 后跳出的黑色终端窗口 —— 把它当成在跟一个乐于助人的助手聊天就行,不是在写代码。
 
-**1. 下载工具包**
+**1. 打开终端,获取代码**
 
-打开 [github.com/frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter),点击绿色的 **Code** 按钮,选择 **Download ZIP**,下载后解压到一个好找的地方(比如桌面)。
+打开终端程序(Mac 上搜索 "Terminal";Windows 上用 Claude Code 安装程序帮你配置好的那个终端),复制粘贴以下内容:
+
+```bash
+git clone https://github.com/frJEN/ai-job-search-au-starter.git
+cd ai-job-search-au-starter
+```
+
+还没装 git?[点此安装](https://git-scm.com/downloads) —— 任何系统上都只需要几分钟,装好后再运行上面这两行。
 
 **2. 安装 Claude Code**
 
 这就是助手本身。按照[安装指南](https://docs.anthropic.com/en/docs/claude-code/getting-started)为你的电脑安装。你需要一个 Claude 订阅(Pro 或 Max)—— 可以理解成像 Netflix 那样的按月订阅,不是一次性购买,也不需要单独申请 API key。
 
-**3. 打开文件夹并启动 Claude Code**
+**3. 启动 Claude Code**
 
-打开终端程序(Mac 上搜索 "Terminal";Windows 上用 Claude Code 安装程序帮你配置好的那个终端),把下面这两行复制粘贴进去,记得把路径改成你第 1 步解压的实际位置:
+回到刚才的终端窗口(第 1 步已经把你带到正确的文件夹了),输入:
 
 ```bash
-cd path/to/ai-job-search-au-starter
 claude
 ```
-
-如果不确定具体路径,直接在 Claude Code 启动后告诉它,它可以帮你一起找。
 
 **4. 让它把剩下的环境装好**
 

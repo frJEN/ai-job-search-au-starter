@@ -39,24 +39,28 @@ It's an AI assistant that lives on your computer and helps you job-hunt. You tel
 
 Do these steps once, in order. Whenever a step says "type this," you're typing it into the black terminal window that Claude Code opens — treat it like chatting with a helpful assistant, not writing code.
 
-**1. Download the toolkit**
+**1. Open your terminal and get the code**
 
-Go to [github.com/frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter), click the green **Code** button, choose **Download ZIP**, then unzip it somewhere easy to find (like your Desktop).
+Open your terminal app (search "Terminal" on Mac, or use the one the Claude Code installer sets up on Windows), and copy-paste this:
+
+```bash
+git clone https://github.com/frJEN/ai-job-search-au-starter.git
+cd ai-job-search-au-starter
+```
+
+Don't have git yet? [Install it](https://git-scm.com/downloads) — a two-minute download for any OS — then run the two lines above.
 
 **2. Install Claude Code**
 
 This is the assistant itself. Follow the [install guide](https://docs.anthropic.com/en/docs/claude-code/getting-started) for your computer. You'll need a Claude subscription (Pro or Max) — think of it like a Netflix subscription, not a one-off purchase.
 
-**3. Open the folder and start Claude Code**
+**3. Start Claude Code**
 
-Open your terminal app (search "Terminal" on Mac, or use the one the Claude Code installer sets up on Windows), and copy-paste this, replacing the path with wherever you unzipped the folder in step 1:
+Back in the same terminal window (you're already in the right folder from step 1), type:
 
 ```bash
-cd path/to/ai-job-search-au-starter
 claude
 ```
-
-If you're not sure of the exact path, just say so once Claude Code starts — it can help you find it.
 
 **4. Let it finish setting itself up**
 
