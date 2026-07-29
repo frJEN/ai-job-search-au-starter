@@ -13,6 +13,8 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 
 ## Account Restriction (Gmail)
 
+Gmail is the only email connector this environment supports today — there's no Outlook/generic connector to wire up instead, so this section is about *which single mailbox* is in scope, not a preference for Gmail over any other provider. If a different email connector becomes available in the future, the same single-mailbox restriction below should apply to it identically.
+
 All Gmail access anywhere in this workflow (`/gmail-sync`, and `/scrape`'s Gmail job-alert ingestion step) is hard-scoped to **`[YOUR_EMAIL]` only** — replace `[YOUR_EMAIL]` here and everywhere else it appears (`gmail-sync.md`, the job-scraper skill, `gmail-alert-sources.md`) with the single Gmail address you connect via claude.ai → Settings → Connectors, before using either workflow:
 
 - Every Gmail query built by either workflow **must** include `deliveredto:[YOUR_EMAIL]` as a mandatory, non-optional clause. This is mechanical, not just a promise: if the wrong account were ever connected, a query scoped this way returns nothing rather than silently reading the wrong inbox.
