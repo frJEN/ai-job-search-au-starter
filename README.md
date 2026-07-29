@@ -6,6 +6,10 @@
 
 *The job search that runs on your machine, tuned for the Australian market.*
 
+**Read this in:** English (this page) · [Plain-English beginner guide](README.beginner.md) · [中文](README.zh.md)
+
+> If this project is useful to you, a ⭐ star on GitHub helps others find it — and if you'd like to support development directly, that's always appreciated too: [Buy Me a Coffee](https://buymeacoffee.com/frJEN) · [爱发电 Afdian](https://afdian.com/a/frJEN). Totally optional either way — enjoy the tool.
+
 An AI-powered job application framework built on [Claude Code](https://claude.com/claude-code). Fill in your profile, and let Claude evaluate job postings, tailor your CV, write cover letters, and prepare you for interviews — with Australia-specific job discovery built in.
 
 > Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.
