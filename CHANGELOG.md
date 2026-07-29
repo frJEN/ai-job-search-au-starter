@@ -16,6 +16,24 @@ per-file diff commands.
 Changes specific to this fork (`frJEN/ai-job-search-au-starter`), tracked separately from
 the sections below since they're not part of upstream's release versioning.
 
+## [Unreleased]
+
+- **freehire-search: full descriptions come back with the search** - `search` now calls
+  freehire's agent search endpoint (`/api/v1/agent/jobs/search`), which serves each hit's
+  complete description instead of the search index's truncated preview. A 20-role search is
+  one request rather than 1 + 20 `detail` calls, and `/scrape`'s Step 2 no longer needs a
+  per-hit fetch for this portal. `--description-format markdown|text|html` (default
+  `markdown`) selects the rendering; `table` and `plain` output is unchanged.
+
+- **Custom templates: any compile-to-PDF toolchain (Typst, ...)** - `/add-template` no longer
+  hardcodes a `lualatex`/`xelatex`/`pdflatex` engine enum. Custom templates now declare a
+  source extension and a full compile command, so Typst (`typst compile`) registers the same
+  way a custom LaTeX template does. Stock CV/cover letter templates stay LaTeX, unchanged.
+
+## [au-v1.0.0] - 2026-07-29
+
+This fork's first tagged release, covering all AU-specific work since forking.
+
 - **Security policy repointed at this fork** - vulnerability reports and `FUNDING.yml`
   now point at this repo instead of upstream.
 - **LICENSE** - credits AU-specific contributions alongside the original copyright.
@@ -38,20 +56,6 @@ the sections below since they're not part of upstream's release versioning.
   for handing off sensitive, unrelated content unprocessed.
 - **Docs consistency** - Gmail platform count, donate link, and Outlook framing corrected
   across `README.md`, `README.beginner.md`, and `README.zh.md`.
-
-## [Unreleased]
-
-- **freehire-search: full descriptions come back with the search** - `search` now calls
-  freehire's agent search endpoint (`/api/v1/agent/jobs/search`), which serves each hit's
-  complete description instead of the search index's truncated preview. A 20-role search is
-  one request rather than 1 + 20 `detail` calls, and `/scrape`'s Step 2 no longer needs a
-  per-hit fetch for this portal. `--description-format markdown|text|html` (default
-  `markdown`) selects the rendering; `table` and `plain` output is unchanged.
-
-- **Custom templates: any compile-to-PDF toolchain (Typst, ...)** - `/add-template` no longer
-  hardcodes a `lualatex`/`xelatex`/`pdflatex` engine enum. Custom templates now declare a
-  source extension and a full compile command, so Typst (`typst compile`) registers the same
-  way a custom LaTeX template does. Stock CV/cover letter templates stay LaTeX, unchanged.
 
 ## [1.0.0] - 2026-07-22
 
@@ -80,4 +84,5 @@ At this baseline the framework provides:
   discover the portable portal skills, with Claude Code as the reference runtime.
 
 [Unreleased]: https://github.com/frJEN/ai-job-search-au-starter/compare/v1.0.0...HEAD
+[au-v1.0.0]: https://github.com/frJEN/ai-job-search-au-starter/releases/tag/au-v1.0.0
 [1.0.0]: https://github.com/frJEN/ai-job-search-au-starter/releases/tag/v1.0.0
