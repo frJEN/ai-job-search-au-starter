@@ -111,6 +111,20 @@ Two distinct alert senders, both carrying real postings:
   Href pattern: `https://au.jora.com/job/<Title-Slug>-<32charhash>?alert_id=...` (occasionally `https://au.jora.com/job/rd/<hash>?...` as a redirect variant) — hrefs appear in the same order as the job blocks in the stripped text.
 - **Parsing:** match each `<a href="https://au.jora.com/job/...">` in document order against the corresponding stripped-text job block (same order); use the full URL as `url`, the slug portion as `id`.
 
+## Fuse Recruitment
+
+- **Status: not yet observed.** No confirmed sender address or body structure yet. Once `/platform-sync`
+  (or manual sign-up at fuserecruitment.com) sets up an alert and a real one arrives, sample it with
+  `get_thread` (`messageFormat: FULL_CONTENT`) and fill in this section the same way as the platforms
+  above. Do not guess a sender or body structure — a recruitment agency's alert format is not
+  discoverable without a real sample.
+
+## Synergie
+
+- **Status: not yet observed.** No confirmed sender address or body structure yet
+  (`synergieaustralia.com.au` and any related domains). Once `/platform-sync` (or manual sign-up) sets
+  up an alert and a real one arrives, sample it and fill in this section. Do not guess.
+
 ## Adding another platform
 
 Not every Australian job board is listed above. If you subscribe to alerts from one that isn't (a niche or regional board, a recruitment agency, etc.), don't guess its sender address or body structure — wait for a real alert to land, sample it the same way as the platforms above, and add a new section here before wiring it into `/scrape` Step 1d.
