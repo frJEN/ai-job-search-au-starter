@@ -332,6 +332,16 @@ class UtilityTests(unittest.TestCase):
         self.assertEqual(normalize("Chr. Hansen, Denmark Division"), "chrhansen")
         self.assertEqual(normalize("Simple Corp ApS"), "simplecorp")
 
+    def test_normalize_strips_australian_suffixes(self):
+        self.assertEqual(normalize("Atlassian Pty Ltd"), "atlassian")
+        self.assertEqual(normalize("Atlassian Pty. Ltd."), "atlassian")
+        self.assertEqual(normalize("Some Company Limited"), "somecompany")
+        self.assertEqual(normalize("Canva Australia"), "canva")
+
+    def test_normalize_does_not_falsely_strip_lookalikes(self):
+        self.assertEqual(normalize("Ltda Consulting"), "ltdaconsulting")
+        self.assertEqual(normalize("Unlimited Corp"), "unlimitedcorp")
+
     def test_anglicize_replaces_danish_chars(self):
         self.assertEqual(anglicize("ørsted"), "orsted")
         self.assertEqual(anglicize("mærsk"), "maersk")
