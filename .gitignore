@@ -85,6 +85,9 @@ job_search_tracker.csv
 # Gmail sync state (message IDs, subjects - personal data)
 gmail_sync/
 
+# Outlook sync state (message IDs, subjects - personal data; see outlook-sync.md, draft/unverified)
+outlook_sync/
+
 # Generated reports (personal output from /html-report)
 reports/
 

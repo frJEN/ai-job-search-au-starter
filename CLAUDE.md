@@ -13,7 +13,9 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 
 ## Account Restriction (Gmail)
 
-Gmail is the only email connector this environment supports today — there's no Outlook/generic connector to wire up instead, so this section is about *which single mailbox* is in scope, not a preference for Gmail over any other provider. If a different email connector becomes available in the future, the same single-mailbox restriction below should apply to it identically.
+Gmail (via claude.ai → Settings → Connectors) is the one built-in, fully automated mailbox path `/gmail-sync` and `/scrape`'s alert-ingestion step actually call — this section is about *which single mailbox* is in scope, not a preference for Gmail over any other provider.
+
+**Using Outlook instead?** Anthropic's official [Claude for Outlook](https://support.claude.com/en/articles/14855664-use-claude-for-outlook) add-in cannot power this automation regardless of account type — it's invoked only inside Outlook's own UI, and has no MCP/tool-call interface Claude Code can call. (Its own documentation is oriented around a Microsoft 365 work/school account and IT-admin-consent deployment; check Microsoft AppSource for the current word on personal outlook.com/hotmail/live support.) A real, Claude-Code-callable alternative exists as an optional, self-directed advanced path — a self-hosted, community-maintained MCP server (Azure App Registration required) — see `.claude/commands/outlook-sync.md`, marked as an unverified draft until it's actually run against a live mailbox. Whichever path you use, the same single-mailbox restriction below should apply.
 
 All Gmail access anywhere in this workflow (`/gmail-sync`, and `/scrape`'s Gmail job-alert ingestion step) is hard-scoped to **`[YOUR_EMAIL]` only** — replace `[YOUR_EMAIL]` here and everywhere else it appears (`gmail-sync.md`, the job-scraper skill, `gmail-alert-sources.md`) with the single Gmail address you connect via claude.ai → Settings → Connectors, before using either workflow:
 

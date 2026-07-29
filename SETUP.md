@@ -187,7 +187,24 @@ Seek, Indeed, and Jora block automated scraping, so `/scrape` reads the job-aler
 
 This isn't optional boilerplate: every Gmail query this repo builds is hard-scoped to `deliveredto:<your address>`, so if the wrong Gmail account is ever connected, queries return nothing instead of silently reading someone else's inbox.
 
-Gmail is the only email connector supported today — not because other providers are excluded on principle, but because there's currently nothing else to connect to. If a different email connector becomes available later, the same single-mailbox restriction applies to it the same way.
+Gmail is the one built-in, fully automated path this repo ships — genuinely the easy option, one click in claude.ai's Connectors settings.
+
+**Using Outlook instead?** Anthropic's official [Claude for Outlook](https://support.claude.com/en/articles/14855664-use-claude-for-outlook) add-in is invoked only inside Outlook's own ribbon UI and has no MCP/tool-call interface — it cannot power `/gmail-sync` or `/scrape`'s automation no matter whose account it's installed on. Its own documentation is oriented around a Microsoft 365 work/school account and IT-admin-consent deployment; check Microsoft AppSource for the current word on whether a personal outlook.com/hotmail/live account is supported at all. A real, Claude-Code-callable alternative exists as an **optional, advanced, self-directed path**: a self-hosted community MCP server (Azure App Registration required) — see step 5a below. It's real and powerful, the same relationship `/add-portal` has to the core workflow: entirely opt-in, more technical, and not required.
+
+Whichever mailbox you use, **connect exactly one** — the single-mailbox restriction is what actually matters, not the provider.
+
+### 5a. Advanced: Outlook via a self-hosted MCP server (optional, unverified)
+
+This is **not required** and **not yet verified** by this repo against a real mailbox — treat it as a starting point, not a finished feature. Skip this section entirely unless you specifically want Outlook ingestion and are comfortable with an Azure Portal setup.
+
+1. Read `.claude/commands/outlook-sync.md` first — it explains what this does, what it doesn't do yet, and links the reference MCP server implementation.
+2. Set up a self-hosted Outlook MCP server (e.g. [`ryaker/outlook-mcp`](https://github.com/ryaker/outlook-mcp), a community project — not built or vetted by this repo's maintainers, review it yourself before trusting it with mailbox access):
+   - Register an application in the [Azure Portal](https://portal.azure.com) → **App registrations** → **New registration**.
+   - Add API permissions for `Mail.ReadWrite`, `Calendars.Read` (delegated).
+   - Create a client secret and note its **value** (not the Secret ID) alongside the Application (client) ID and Tenant ID.
+   - Follow that project's own install/config instructions to run the server and connect it to Claude Code as an MCP server.
+3. Once connected, `outlook-sync.md`'s tool calls are **provisional** — the exact tool names/schemas depend on the MCP server you configured, and haven't been confirmed live. Expect to adjust them against what your server actually exposes.
+4. This has not been wired into `/scrape`'s automated alert-ingestion step (Step 1d) - it's a separate, standalone command for now, kept apart from the proven Gmail path until it's actually verified working.
 
 ## 6. Get an Adzuna API key (optional)
 
