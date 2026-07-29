@@ -2,6 +2,7 @@
   "permissions": {
     "allow": [
       "Skill(job-application-assistant)",
+      "Skill(scrape)",
       "Bash(bun run:*)",
       "Bash(python salary_lookup.py:*)",
       "Bash(python3 salary_lookup.py:*)",
