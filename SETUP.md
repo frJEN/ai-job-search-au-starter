@@ -1,12 +1,8 @@
 # Setup Guide
 
-Step-by-step instructions for getting the AI Job Search framework running, including this fork's Australia-specific tooling. Written for whichever path you took to get the code: no-git ZIP download or a git fork.
+Step-by-step instructions for getting the AI Job Search framework running, including this fork's Australia-specific tooling.
 
 ## 1. Get the code
-
-**No git, no GitHub account needed:** go to [github.com/frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter), click **Code → Download ZIP**, and unzip it wherever you keep projects.
-
-**Comfortable with git?**
 
 ```bash
 gh repo fork frJEN/ai-job-search-au-starter --clone
@@ -14,6 +10,8 @@ cd ai-job-search-au-starter
 ```
 
 Or fork manually on GitHub, then clone your fork. Either way, `upstream` should point at `MadsLorentzen/ai-job-search` for pulling framework updates later (step 11) — `git remote add upstream https://github.com/MadsLorentzen/ai-job-search.git` if it isn't set already.
+
+Don't have git? [Install it](https://git-scm.com/downloads) first — a two-minute download on any OS, and required for the fork-and-pull-updates workflow this guide covers (step 11). If you just want to try the framework without forking, `git clone https://github.com/frJEN/ai-job-search-au-starter.git` works too, but you won't be able to pull upstream updates without setting up a remote yourself later.
 
 ## 2. Install Claude Code
 
