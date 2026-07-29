@@ -13,7 +13,7 @@ gh repo fork frJEN/jobhunt-au-starter --clone
 cd jobhunt-au-starter
 ```
 
-Or fork manually on GitHub, then clone your fork. Either way, `upstream` should point at `MadsLorentzen/ai-job-search` for pulling framework updates later (step 9) — `git remote add upstream https://github.com/MadsLorentzen/ai-job-search.git` if it isn't set already.
+Or fork manually on GitHub, then clone your fork. Either way, `upstream` should point at `MadsLorentzen/ai-job-search` for pulling framework updates later (step 11) — `git remote add upstream https://github.com/MadsLorentzen/ai-job-search.git` if it isn't set already.
 
 ## 2. Install Claude Code
 
@@ -143,7 +143,7 @@ Push-Location $SmokeDir; xelatex -interaction=nonstopmode -halt-on-error cover_s
 
 ### Optional: pdftotext (for the ATS check)
 
-`/apply` runs an ATS parseability check on the compiled CV, and also uses it to extract the cover letter body for the application packet (step 8). This uses `pdftotext` from [poppler](https://poppler.freedesktop.org/), which is not part of TeX distributions:
+`/apply` runs an ATS parseability check on the compiled CV, and also uses it to extract the cover letter body for the application packet (step 9). This uses `pdftotext` from [poppler](https://poppler.freedesktop.org/), which is not part of TeX distributions:
 
 - **macOS:** `brew install poppler`
 - **Debian/Ubuntu:** `sudo apt install poppler-utils`
@@ -186,6 +186,8 @@ Seek, Indeed, and Jora block automated scraping, so `/scrape` reads the job-aler
 3. Open `CLAUDE.md` and replace every `[YOUR_EMAIL]` placeholder in its "Account Restriction (Gmail)" section with that address. Also replace it in `.claude/commands/gmail-sync.md` and `.claude/skills/job-scraper/gmail-alert-sources.md` (same placeholder, three files).
 
 This isn't optional boilerplate: every Gmail query this repo builds is hard-scoped to `deliveredto:<your address>`, so if the wrong Gmail account is ever connected, queries return nothing instead of silently reading someone else's inbox.
+
+Gmail is the only email connector supported today — not because other providers are excluded on principle, but because there's currently nothing else to connect to. If a different email connector becomes available later, the same single-mailbox restriction applies to it the same way.
 
 ## 6. Get an Adzuna API key (optional)
 
@@ -250,7 +252,24 @@ You can update specific sections later:
 
 The `--section search` option is especially useful as your priorities evolve. It re-runs the search configuration interview and suggests role types you may not have considered based on your full profile.
 
-## 8. Test the full workflow
+## 8. Refine your platform profiles and set up alerts (optional but recommended)
+
+`/platform-sync` uses [Claude in Chrome](https://claude.com/blog/claude-in-chrome) to refine your profile on LinkedIn/Seek/Indeed and set up job alerts on LinkedIn/Seek/Indeed/Jora/Fuse Recruitment/Synergie, all pointed at the email address from step 5. **Read `.claude/commands/platform-sync.md`'s caution notes before running it** — it's a materially different kind of automation than the read-only portal CLIs elsewhere in this repo (it signs into real accounts, under your own already-authenticated browser session, to make live changes), and it documents a fully manual alternative if you'd rather not use it.
+
+Before running it:
+
+1. **Install the Claude in Chrome extension** if you haven't already, and sign into each target platform (LinkedIn, Seek, Indeed, Jora, Fuse Recruitment, Synergie) yourself, in that same browser — using the email address from step 5 on every account. `/platform-sync` never enters a password or performs sign-in itself.
+2. **Grant the extension's site permission** for each platform's domain — this is a per-site permission you approve in the extension's own settings, not a "tab group" (a tab group is just a Chrome organizational label; it doesn't control what Claude can access).
+
+Then run:
+
+```
+/platform-sync
+```
+
+It shows you every proposed profile edit and every alert before submitting anything — nothing is written without your explicit confirmation per platform.
+
+## 9. Test the full workflow
 
 Find a job posting you're interested in, then:
 
@@ -278,7 +297,7 @@ Claude will:
 5. Revise, compile both to PDF, and inspect the layout
 6. Generate `documents/applications/<company>_<role>/application_packet.md` — hand this to the [Claude in Chrome](https://claude.com/blog/claude-in-chrome) extension, or use it for manual form-filling. Either way, review the completed form yourself before submitting — this workflow never submits on your behalf.
 
-## 9. Optional: set up salary benchmarking
+## 10. Optional: set up salary benchmarking
 
 If you have salary data (from a union, salary survey, Glassdoor, or personal research):
 
@@ -291,7 +310,7 @@ If you have salary data (from a union, salary survey, Glassdoor, or personal res
 
 This creates `salary_data.json` which the `/apply` workflow uses for salary benchmarking. If you skip this step, salary lookup is simply omitted — the salary-floor check against Australia's minimum-wage/award standard still runs regardless (see `04-job-evaluation.md`).
 
-## 10. Pulling upstream updates into your fork
+## 11. Pulling upstream updates into your fork
 
 Upstream (`MadsLorentzen/ai-job-search`) keeps improving the methodology files your fork has personalized, so plan for updates from day one:
 
@@ -309,13 +328,13 @@ Upstream (`MadsLorentzen/ai-job-search`) keeps improving the methodology files y
 ## Troubleshooting
 
 ### "salary_data.json not found"
-Expected if you haven't set up salary benchmarking (step 9). The `/apply` workflow skips this step automatically.
+Expected if you haven't set up salary benchmarking (step 10). The `/apply` workflow skips this step automatically.
 
 ### Job search CLI tools not working
 Make sure Bun is installed and you ran `bun install` in each CLI directory. The tools require network access to fetch job listings.
 
 ### `/scrape`'s Gmail step finds nothing
-Check claude.ai → Settings → Connectors — confirm the connected Gmail account matches the address you put in place of `[YOUR_EMAIL]`, and that you're actually subscribed to job alerts from Seek/Indeed/Jora/LinkedIn on that address. Never loosen the `deliveredto:` clause to "get more results" — a wrong-account connection should return nothing, not something.
+Check claude.ai → Settings → Connectors — confirm the connected Gmail account matches the address you put in place of `[YOUR_EMAIL]`, and that you're actually subscribed to job alerts from Seek/Indeed/Jora/LinkedIn/Fuse/Synergie on that address. Never loosen the `deliveredto:` clause to "get more results" — a wrong-account connection should return nothing, not something.
 
 ### Adzuna search returns an auth error
 `ADZUNA_APP_ID`/`ADZUNA_APP_KEY` aren't set, or the account hasn't confirmed its activation email yet. Check your inbox for the Adzuna confirmation email if you registered recently.
