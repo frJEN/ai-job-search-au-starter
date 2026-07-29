@@ -93,7 +93,7 @@ Seek, Indeed, and Jora are not scraped directly (see `search-queries.md` for why
 2. Read `.claude/skills/job-scraper/gmail-alert-sources.md` for the confirmed sender addresses, subject-line patterns (to exclude alert-creation receipts and marketing noise), and body-parsing anchors per platform. **Never guess a sender or body structure that file doesn't document** — if a platform is marked "not yet observed," skip it for this run and say so in the summary rather than inventing a parser.
 3. Build one query per run:
    ```
-   deliveredto:[YOUR_EMAIL] in:inbox newer_than:14d {from:jobalerts-noreply@linkedin.com from:jobalert.indeed.com from:match.indeed.com from:s.seek.com.au from:jora.com}
+   deliveredto:[YOUR_EMAIL] in:inbox newer_than:14d {from:jobalerts-noreply@linkedin.com from:jobalert.indeed.com from:match.indeed.com from:s.seek.com.au from:jora.com from:no-reply@fuserecruitment.com}
    ```
    (Extend the sender OR-group as more platform senders are confirmed in `gmail-alert-sources.md`.)
 4. Call `search_threads` (`view: THREAD_VIEW_MINIMAL`, `pageSize: 50`), filter out threads whose subject matches a documented noise pattern (alert-creation receipts, marketing), then `get_thread` (`messageFormat: FULL_CONTENT`) on the remainder to get full bodies — classification requires the actual body, not the snippet.

@@ -113,17 +113,36 @@ Two distinct alert senders, both carrying real postings:
 
 ## Fuse Recruitment
 
-- **Status: not yet observed.** No confirmed sender address or body structure yet. Once `/platform-sync`
-  (or manual sign-up at fuserecruitment.com) sets up an alert and a real one arrives, sample it with
-  `get_thread` (`messageFormat: FULL_CONTENT`) and fill in this section the same way as the platforms
-  above. Do not guess a sender or body structure — a recruitment agency's alert format is not
-  discoverable without a real sample.
+- **Real alerts:** `no-reply@fuserecruitment.com`
+- **Noise (same sender, not alerts):** the same address also sends the registration welcome email
+  ("Welcome to Fuse Recruitment") — filter by **subject**, not sender, since Fuse uses one address for
+  everything.
+- **Subject pattern (real alert):** `"We have new jobs for you!"` — every alert uses this exact
+  subject regardless of which saved search triggered it.
+- **Body:** HTML only (no usable `plaintextBody`). Intro line names the matched alert:
+  `"We have N new jobs that match your job alert <Alert Name>."` Per-job blocks, stripped-text order:
+  ```
+  <Title>
+  <Location>
+  [$salary range or hourly rate]
+  <Recency, e.g. "TODAY" / "N days ago">
+  ```
+  **No employer/company name is shown** in this digest — Fuse is the agency, and unlike Seek/Indeed/
+  Jora it doesn't name the client company in the alert email itself; treat `company` as `null` for
+  Fuse-sourced results.
+- **Parsing:** hrefs appear in the same document order as the job blocks:
+  `https://www.fuserecruitment.com/jobview/<title-slug>/<uuid>?utm_source=JobAlerts&utm_medium=Email&utm_campaign=Collection&utm_content=job-area` — match each href to its corresponding stripped-text block by position, use the full URL as `url`, the UUID as `id`.
 
 ## Synergie
 
-- **Status: not yet observed.** No confirmed sender address or body structure yet
-  (`synergieaustralia.com.au` and any related domains). Once `/platform-sync` (or manual sign-up) sets
-  up an alert and a real one arrives, sample it and fill in this section. Do not guess.
+- **Status: alert structure not yet observed.** No job-alert email has arrived yet from
+  `synergieaustralia.com.au` or any related domain — do not guess a body structure.
+- **Noise (confirmed, not an alert):** `support@recruitonline.com.au`, subject `"Confirmation of your
+  Online Application"` — an application-received receipt, not a posting. This confirms Synergie's
+  applications route through a third-party ATS called **RecruitOnline** (`recruitonline.com.au`), so
+  that's the domain to watch for a future alert email, alongside `synergieaustralia.com.au` itself.
+  Once a real alert arrives, sample it with `get_thread` (`messageFormat: FULL_CONTENT`) and fill in
+  this section the same way as the platforms above.
 
 ## Adding another platform
 
