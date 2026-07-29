@@ -317,6 +317,69 @@ Check whether the posting or the portal it came from asks for free-text fields t
 
 **Only on yes**, read `08-application-forms.md` and draft the fields per its rules, grounded against the same three-source union as the CV and cover letter. Save per that file's "Output format" section. **On no, or when the posting has no such fields, say nothing further and move on** — this is an optional addition and never changes the default two-document output.
 
+---
+
+## Step 7: Generate Application Packet (for Claude in Chrome / manual form-filling)
+
+Claude Code has no browser automation of its own — actually filling out the web form on the job platform needs either the user typing it in themselves, or the **Claude in Chrome** browser extension acting on their behalf. Either way, the bottleneck is having the right answers assembled in one place rather than re-derived per field. This step builds that packet automatically, every time.
+
+Run this unconditionally after Step 6 — it does not need separate confirmation, since it only packages content the user has already reviewed in Steps 1–6.
+
+### 7a. Extract a plain-text cover letter body
+
+```bash
+cd cover_letters && pdftotext -layout cover_<company>_<role>.pdf cover_<company>_<role>.txt
+```
+
+Read the `.txt` file and keep only the body paragraphs — drop the letterhead/address header and the signature block, since those are redundant once the name/contact fields are filled separately and a form's textarea just needs the prose. If `pdftotext` is unavailable (per Step 5d's availability check), extract the body directly from the `.tex` draft's `\lettercontent{}` content instead, stripping LaTeX commands.
+
+Delete the extracted `.txt` file once you've captured the body (same cleanup rule as Step 5d).
+
+### 7b. Assemble the packet
+
+Create the application's document folder if it does not already exist (`documents/applications/<company>_<role>/`, same naming convention as `/outcome` uses), and write `application_packet.md` there:
+
+```markdown
+# Application Packet: <Company> — <Role>
+
+Generated <YYYY-MM-DD>. For use with Claude in Chrome or manual form-filling.
+**Do not auto-submit.** Fill the form, then stop for the user's final review before submitting.
+
+## Contact
+- Name: <from 01-candidate-profile.md>
+- Email: <from 01-candidate-profile.md>
+- Phone: <from 01-candidate-profile.md>
+- Location: <from 01-candidate-profile.md>
+- LinkedIn: <from 01-candidate-profile.md, or "not yet set up">
+
+## Screening-question answers
+Copy verbatim from `04-job-evaluation.md`'s "Screening-Question Answers" section — do not re-word per application:
+- Are you legally entitled to work in <country>? → <answer>
+- Are you a citizen or permanent resident? → <answer>
+- Do you require visa sponsorship? → <answer>
+- How did you hear about this role? → <the sourcing portal, if traceable — e.g. from /scrape's `portal` tag or the posting URL's domain; otherwise "not specified">
+- Availability / notice period → **ask the user** — not fixed in the profile, never invent this
+- Salary expectation → **ask the user** — the profile only sets a floor (see Deal-breakers in `CLAUDE.md`), never state a number on your own
+
+## Documents to attach
+- CV: `cv/main_<company>_<role>.pdf`
+- Cover letter: `cover_letters/cover_<company>_<role>.pdf`
+
+## Cover letter (plain text, for a text-box field)
+<the extracted body from Step 7a>
+
+## References
+Not included. See `01-candidate-profile.md`'s References section — never add a referee's name or contact here or to any form without asking the user first, every time.
+
+## Handoff instructions for Claude in Chrome
+Open the job posting's application form. Fill every field this packet answers directly. For anything
+marked "ask the user," pause and ask rather than guessing. **Stop before clicking submit** — show the
+completed form for the user's final review and let them submit it themselves.
+```
+
+Present a short summary to the user: the packet's file path, and that it's ready to hand to Claude in Chrome (or use for manual entry).
+
 ### Next Steps
+- **Ready to apply?** Open `documents/applications/<company>_<role>/application_packet.md` and hand it to Claude in Chrome, or fill the form manually.
 - **Submitted?** `/outcome <company>` logs it in the tracker and starts the per-application record that `/setup` later uses to calibrate the fit framework.
 - **Interview scheduled?** `/interview` builds a stage-specific prep pack from this posting and the documents you just created.

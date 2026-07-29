@@ -6,15 +6,28 @@
 
 `/scrape` discovers every portal skill under `.agents/skills/*/SKILL.md` and runs its CLI first. Shipped country-agnostic CLIs include `linkedin-search` and `freehire-search`; Danish demos and any skill you add with `/add-portal` are included the same way. You do **not** need a matching `site:` line below for those CLIs to run.
 
-The `site:` query templates in this file are the **WebSearch fallback** — for portals without a CLI, company career pages, or when a CLI fails.
+- **`adzuna-search`**: official, key-based Adzuna Job Search API (Australia). Requires `ADZUNA_APP_ID`/`ADZUNA_APP_KEY` exported (see `SETUP.md`). An independent aggregator, not a Seek/Indeed/Jora mirror — adds broad incremental Australian coverage.
+
+**No Seek/Indeed/Jora CLI is installed, on purpose.** Live `robots.txt` checks on these Australian job boards name-block or blanket-disallow automated crawlers (several name the `anthropic-ai` user-agent specifically). Building scrapers against that would go against their stated policy, so none were built. Fuse Recruitment and Synergie are recruitment agencies with no public search API or CLI-friendly listing page at all. All five are covered two ways instead — both fully compliant, zero ToS risk:
+
+1. **Gmail job-alert ingestion** (`/scrape` Step 1d) — reads the alert emails these platforms already send to your own inbox once you subscribe to job alerts on their site (`/platform-sync` can set this subscription up for you). See `gmail-alert-sources.md` for the confirmed sender patterns and parsing anchors per platform — add a platform there only once you've actually received a real alert from it; nothing is guessed.
+2. **Discovery** via the `site:` WebSearch queries below (WebSearch queries a search engine's index, not the site directly — outside its robots.txt entirely).
+
+The `site:` query templates in this file are the **WebSearch fallback** — for Seek/Indeed/Jora/Fuse/Synergie, any other portal without a CLI, company career pages, or when a CLI fails.
 
 ## Search Sites
 
-Primary (your market's job boards - scaffold one with `/add-portal`):
-- **[YOUR_JOB_BOARD]** - your market's largest general job board
-- **linkedin.com/jobs** - LinkedIn job listings (filter: [YOUR_COUNTRY] / [YOUR_CITY]); also covered by `linkedin-search` CLI
-- **[YOUR_INDUSTRY_JOB_BOARD]** - a niche/industry board for your field (optional)
-- **[YOUR_ADDITIONAL_JOB_BOARD]** - another major board for your market (optional)
+Primary (Australia-wide job boards):
+- **seek.com.au** — Australia's largest general job board (WebSearch fallback + Gmail alert ingestion, see note above)
+- **linkedin.com/jobs** — filter: Australia / [YOUR_CITY]; also covered by the `linkedin-search` CLI directly, plus Gmail alert ingestion as a second channel
+- **au.indeed.com** — general job board (WebSearch fallback + Gmail alert ingestion, see note above)
+- **au.jora.com** — general job board (WebSearch fallback + Gmail alert ingestion, see note above)
+- **adzuna.com.au** — general job board with an official search API, wired up as the `adzuna-search` CLI
+- **[YOUR_INDUSTRY_JOB_BOARD]** - a niche/industry board for your field (optional, scaffold with `/add-portal`)
+
+Recruitment agencies (candidate-registration model, not a general job board):
+- **fuserecruitment.com** — Fuse Recruitment (Gmail alert ingestion only, once subscribed)
+- **synergieaustralia.com.au** — Synergie (Gmail alert ingestion only, once subscribed)
 
 Secondary (company career pages via Google):
 - Direct Google searches with `site:` filters for known target companies

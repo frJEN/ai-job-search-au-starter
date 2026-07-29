@@ -11,6 +11,19 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 4. **Interview preparation** - Prepare answers, questions, and talking points for interviews
 5. **Career strategy** - Advise on positioning and personal branding
 
+## Account Restriction (Gmail)
+
+Gmail (via claude.ai → Settings → Connectors) is the one built-in, fully automated mailbox path `/gmail-sync` and `/scrape`'s alert-ingestion step actually call — this section is about *which single mailbox* is in scope, not a preference for Gmail over any other provider.
+
+**Using Outlook instead?** Anthropic's official [Claude for Outlook](https://support.claude.com/en/articles/14855664-use-claude-for-outlook) add-in cannot power this automation regardless of account type — it's invoked only inside Outlook's own UI, and has no MCP/tool-call interface Claude Code can call. (Its own documentation is oriented around a Microsoft 365 work/school account and IT-admin-consent deployment; check Microsoft AppSource for the current word on personal outlook.com/hotmail/live support.) A real, Claude-Code-callable alternative exists as an optional, self-directed advanced path — a self-hosted, community-maintained MCP server (Azure App Registration required) — see `.claude/commands/outlook-sync.md`, marked as an unverified draft until it's actually run against a live mailbox. Whichever path you use, the same single-mailbox restriction below should apply.
+
+All Gmail access anywhere in this workflow (`/gmail-sync`, and `/scrape`'s Gmail job-alert ingestion step) is hard-scoped to **`[YOUR_EMAIL]` only** — replace `[YOUR_EMAIL]` here and everywhere else it appears (`gmail-sync.md`, the job-scraper skill, `gmail-alert-sources.md`) with the single Gmail address you connect via claude.ai → Settings → Connectors, before using either workflow:
+
+- Every Gmail query built by either workflow **must** include `deliveredto:[YOUR_EMAIL]` as a mandatory, non-optional clause. This is mechanical, not just a promise: if the wrong account were ever connected, a query scoped this way returns nothing rather than silently reading the wrong inbox.
+- If a query returns fewer results than expected, the fix is checking claude.ai → Settings → Connectors (which Gmail account is connected) - **never** loosen or drop the `deliveredto:` clause to "get more results."
+- Never take any action - read, search, label, draft, delete - against any mailbox or message context implying a different account.
+- All Gmail access in this repo is **read-only** except `/gmail-sync`'s explicit, user-approved write flow (tracker/`outcome.md` updates only, after batch approval - see `gmail-sync.md`). `/scrape`'s ingestion step never labels, archives, drafts, or deletes anything.
+
 ## Candidate Profile
 
 <!-- This section is auto-populated by /setup. You can also fill it in manually. -->
@@ -89,7 +102,8 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 2. **Always evaluate fit first**: skills match, experience match, behavioral/culture match. Present this assessment to the user before proceeding.
 3. If good fit: create targeted CV (`cv/main_<company>_<role>.tex`) and cover letter (`cover_letters/cover_<company>_<role>.tex`)
 4. **Verify both documents** (see Verification Checklist below)
-5. Prepare interview talking points based on the role requirements and your strengths
+5. Generate an application packet (`documents/applications/<company>_<role>/application_packet.md`) for **Claude in Chrome** or manual form-filling — contact fields, canonical screening-question answers, document paths, and the cover letter body in one place. Claude Code has no browser automation of its own; this packet is what makes handing off to Claude in Chrome (or typing it in by hand) fast. Final submission is always a human action — never automated.
+6. Prepare interview talking points based on the role requirements and your strengths
 
 **Important:** When mentioning agentic coding or AI tooling in CVs/cover letters, explicitly reference **Claude Code** by name.
 

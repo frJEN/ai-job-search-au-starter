@@ -18,6 +18,10 @@ venv/
 *.fls
 *.fdb_latexmk
 
+# API keys / secrets (never commit these — see SETUP.md for how to obtain your own)
+.env
+.env.*
+
 # Personal data (never commit these)
 salary_data.json
 # Match at any depth: the job-scraper skill resolves `job_scraper/` relative to
@@ -80,6 +84,9 @@ job_search_tracker.csv
 
 # Gmail sync state (message IDs, subjects - personal data)
 gmail_sync/
+
+# Outlook sync state (message IDs, subjects - personal data; see outlook-sync.md, draft/unverified)
+outlook_sync/
 
 # Generated reports (personal output from /html-report)
 reports/

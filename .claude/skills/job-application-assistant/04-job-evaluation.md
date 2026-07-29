@@ -105,7 +105,11 @@ Does this role advance career goals and contain tasks that energize?
 - **Flexibility**: [YOUR_SCHEDULE_CONSTRAINTS]
 - **Professional development**: [YOUR_GROWTH_PRIORITIES]
 
-### 6. Salary Benchmark (Optional)
+### 6. Salary Floor Check (always run)
+
+If the posting states a salary or rate, compare it against the relevant minimum-wage/award standard for that country and role (e.g. Fair Work award rates in Australia). This is a **flag, not an exclude** — a posting that looks underpaid is surfaced to the user with a note, never silently dropped from consideration. This check does not depend on the benchmark tool below and always runs, even if that tool isn't configured.
+
+### 7. Salary Benchmark (Optional, requires the salary tool)
 
 If the salary lookup tool is configured (`salary_data.json` exists), look up the company:
 ```
