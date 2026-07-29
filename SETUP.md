@@ -177,10 +177,10 @@ The Danish demo portals (Jobbank, Jobdanmark, Jobindex, Jobnet) ship as a refere
 
 ## 5. Connect Gmail (for job-alert ingestion)
 
-Seek, Indeed, and Jora block automated scraping, so `/scrape` reads the job-alert emails they already send to your inbox instead — this needs the Gmail connector, not a terminal command.
+Seek, Indeed, Jora, Fuse Recruitment, and Synergie block automated scraping or don't offer it at all, so `/scrape` reads the job-alert emails they already send to your inbox instead — this needs the Gmail connector, not a terminal command. LinkedIn's alerts are read the same way, as a second channel alongside the `linkedin-search` CLI installed in step 4.
 
 1. Go to [claude.ai](https://claude.ai) → **Settings → Connectors** and connect the Gmail account you use (or will use) for job-alert subscriptions.
-2. Subscribe to job alerts on Seek, Indeed, Jora, and/or LinkedIn from that same address, if you haven't already.
+2. Subscribe to job alerts on Seek, Indeed, Jora, LinkedIn, Fuse Recruitment, and/or Synergie from that same address, if you haven't already.
 3. Open `CLAUDE.md` and replace every `[YOUR_EMAIL]` placeholder in its "Account Restriction (Gmail)" section with that address. Also replace it in `.claude/commands/gmail-sync.md` and `.claude/skills/job-scraper/gmail-alert-sources.md` (same placeholder, three files).
 
 This isn't optional boilerplate: every Gmail query this repo builds is hard-scoped to `deliveredto:<your address>`, so if the wrong Gmail account is ever connected, queries return nothing instead of silently reading someone else's inbox.

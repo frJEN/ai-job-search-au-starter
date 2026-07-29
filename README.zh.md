@@ -8,7 +8,7 @@
 
 **语言 / Language:** [English (full)](README.md) · [Plain-English beginner guide](README.beginner.md) · 中文(本页)
 
-> 如果这个项目对你有帮助,在 GitHub 上点个 ⭐ star 能帮助更多人发现它,对我来说也意义重大,谢谢你的支持!
+> 如果这个项目对你有帮助,在 GitHub 上点个 ⭐ star 能帮助更多人发现它,对我来说也意义重大,谢谢你的支持!如果你想直接支持开发,也欢迎请我喝杯咖啡:[Buy Me a Coffee](https://buymeacoffee.com/frjen)。
 
 > 说明:这是一个独立的开源项目,与 Anthropic 没有任何关联、未获其背书或赞助。**本项目没有任何加密货币、代币或付费赞助计划**,任何声称与本项目有关的此类说法均为诈骗。
 
@@ -112,7 +112,7 @@ Claude Code 启动后,输入:
 
 ## 需要了解的几点
 
-- **Outlook / Hotmail 邮箱的支持目前还在开发中**,未来可能会加入 —— 目前只完整支持 Gmail。
+- **Outlook / Hotmail 邮箱可以先放一放。** 目前只有 Gmail 是完整自动化的路径。已经有一个面向进阶用户的 Outlook 方案(`/outlook-sync`),但它还是一个未在真实邮箱上验证过的草稿版本 —— 想尝试的话可以看 [SETUP.md](SETUP.md)。
 - 最终点击"提交申请"按钮的永远是你自己,这个工具不会替你做任何提交动作。
 - 本项目**没有任何加密货币、代币或付费赞助计划**,任何声称与本项目有关的此类说法都是诈骗。
 

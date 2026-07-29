@@ -8,7 +8,7 @@
 
 **Read this in:** [English (full)](README.md) · Plain-English beginner guide (this page) · [中文](README.zh.md)
 
-> If this project is useful to you, a ⭐ star on GitHub helps others find it and would mean a great deal to me, thanks for your support!
+> If this project is useful to you, a ⭐ star on GitHub helps others find it and would mean a great deal to me, thanks for your support! If you'd like to support development directly, [Buy Me a Coffee](https://buymeacoffee.com/frjen) is always welcome too.
 
 > Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.
 >
@@ -114,7 +114,7 @@ That's genuinely most of it — a handful of other commands exist for more advan
 
 ## Good to know
 
-- **Outlook / Hotmail email support is still being built** and may be added in a future update — right now, this only fully works with Gmail.
+- **Outlook / Hotmail works best as a "later" project.** Gmail is the one fully-automated path today. An advanced, self-directed Outlook path exists (`/outlook-sync`) but it's an unverified draft, not yet run against a real mailbox — see [SETUP.md](SETUP.md) if you want to try it yourself.
 - You are always the one who clicks the final "Submit application" button — nothing here applies on your behalf.
 - There's no cryptocurrency, token, or paid sponsorship tied to this project. If anyone claims otherwise, it's a scam.
 

@@ -4,11 +4,11 @@
 
 # AI Job Search — Australia Starter
 
-*The job search that runs on your machine, tuned for the Australian market. Super user friendly for  non-technical users, workflow predominantly automated.*
+*The job search that runs on your machine, tuned for the Australian market. Super user friendly for non-technical users, workflow predominantly automated.*
 
 **Read this in:** English (this page) · [Plain-English beginner guide](README.beginner.md) · [中文](README.zh.md)
 
-> If this project is useful to you, a ⭐ star on GitHub helps others find it and would mean a great deal to me, thanks for your support!
+> If this project is useful to you, a ⭐ star on GitHub helps others find it and would mean a great deal to me, thanks for your support! If you'd like to support development directly, [Buy Me a Coffee](https://buymeacoffee.com/frjen) is always welcome too.
 
 An AI-powered job application framework built on [Claude Code](https://claude.com/claude-code). Fill in your profile, and let Claude evaluate job postings, tailor your CV, write cover letters, and prepare you for interviews — with Australia-specific job discovery built in.
 
@@ -26,7 +26,7 @@ This particular repo ([frJEN/ai-job-search-au-starter](https://github.com/frJEN/
 
 **This fork adds Australia-specific job discovery on top of that core:**
 - **`adzuna-search`** — an official, key-based CLI against the [Adzuna](https://developer.adzuna.com/) Job Search API for independent Australian job coverage.
-- **Gmail job-alert ingestion** — Seek, Indeed, Jora, Fuse Recruitment, and Synergie block or don't offer automated scraping, so instead `/scrape` reads the job-alert emails these platforms already send to your own inbox, via the official Gmail connector. Hard-scoped to the one mailbox you connect — see `CLAUDE.md`'s Account Restriction section.
+- **Gmail job-alert ingestion** — Seek, Indeed, Jora, Fuse Recruitment, and Synergie block or don't offer automated scraping, so instead `/scrape` reads the job-alert emails these platforms already send to your own inbox, via the official Gmail connector; LinkedIn's alert emails are read the same way as a second channel alongside the existing `linkedin-search` CLI. Hard-scoped to the one mailbox you connect — see `CLAUDE.md`'s Account Restriction section.
 - **`/platform-sync`** — refines your profile on each of those platforms and sets up the job alerts above for you, via the [Claude in Chrome](https://claude.com/blog/claude-in-chrome) extension acting in your own signed-in browser session. Read its caution notes before using — see [Quick start](#quick-start) step 8.
 - **Application packets** — `/apply` now also generates a bundled `application_packet.md` (contact fields, screening-question answers, document paths, cover letter text) so Claude in Chrome — or you, manually — can fill out the actual application form without re-typing everything. Final submission is always a human action, never automated.
 
@@ -80,7 +80,7 @@ Claude Code will run the actual install commands via its Bash tool, asking your 
 
 ### 5. Connect Gmail (for job-alert ingestion)
 
-At [claude.ai](https://claude.ai) → **Settings → Connectors**, connect your Gmail account — the one you use (or will use) to subscribe to job alerts from Seek, Indeed, Jora, and LinkedIn. Then open `CLAUDE.md` and replace every `[YOUR_EMAIL]` placeholder with that same address (it also appears in `.claude/commands/gmail-sync.md` and `.claude/skills/job-scraper/gmail-alert-sources.md`). This is a safety gate, not a formality: every Gmail query this repo builds is hard-scoped to that one address, so a misconfigured connector returns nothing instead of silently reading the wrong inbox.
+At [claude.ai](https://claude.ai) → **Settings → Connectors**, connect your Gmail account — the one you use (or will use) to subscribe to job alerts from Seek, Indeed, Jora, LinkedIn, Fuse Recruitment, and Synergie. Then open `CLAUDE.md` and replace every `[YOUR_EMAIL]` placeholder with that same address (it also appears in `.claude/commands/gmail-sync.md` and `.claude/skills/job-scraper/gmail-alert-sources.md`). This is a safety gate, not a formality: every Gmail query this repo builds is hard-scoped to that one address, so a misconfigured connector returns nothing instead of silently reading the wrong inbox.
 
 Gmail is the one built-in, fully automated path — genuinely the easy option. Using Outlook instead? See `CLAUDE.md`'s Account Restriction section for why Anthropic's official Claude for Outlook add-in can't power this repo's automation, and [SETUP.md](SETUP.md)'s advanced Outlook section for the self-directed alternative (`.claude/commands/outlook-sync.md`, currently an unverified draft). Whichever mailbox you use, keep it to one.
 

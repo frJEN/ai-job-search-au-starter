@@ -6,7 +6,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 Releases are vetted checkpoints of `master`. If you maintain a personalized fork,
 prefer updating to a tagged release over pulling raw `master` (see
-[SETUP.md, section 8](SETUP.md#8-pulling-upstream-updates-into-your-fork)). The
+[SETUP.md, section 11](SETUP.md#11-pulling-upstream-updates-into-your-fork)). The
 `framework_version` markers on methodology files tell you which of your customized
 files a release touched; `python3 tools/check_upstream_updates.py` lists them with
 per-file diff commands.
