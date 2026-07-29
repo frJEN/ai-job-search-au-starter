@@ -40,13 +40,14 @@ Lookback window: `since <date>` argument if given, else `state.last_sync` if set
 1. Call `list_labels` and look for a user label whose name suggests job-search email (e.g. contains "job", "application", "career" case-insensitively). Note its `id` if found.
 2. Normalize each open application's company name for matching later (lowercase; strip `inc`, `inc.`, `llc`, `ltd`, `a/s`, `corp`, `corporation`, `group`; strip punctuation; collapse whitespace).
 3. Build a Gmail query combining (with `OR` groups via `{}`):
+   - `deliveredto:[YOUR_EMAIL]` - **mandatory, always first, never omitted.** See `CLAUDE.md`'s "Account Restriction (Gmail)" section: this repo's Gmail access is hard-scoped to the one mailbox you connect. If the query returns fewer results than expected, check claude.ai → Settings → Connectors - never drop this clause to "get more results."
    - `label:<id>` if a job-search label was found
    - A quoted-name OR-group of the open applications' company names, e.g. `{"Acme Corp" "BigCo"}`
    - A sender-domain OR-group of common ATS platforms: `{from:greenhouse.io from:lever.co from:myworkday.com from:ashbyhq.com from:smartrecruiters.com from:icims.com from:bamboohr.com}`
    - The lookback bound, e.g. `newer_than:30d` or `after:2026/06/15`
    - `in:inbox` (skip sent/drafts - status signals come from what employers send you, not what you sent them)
 
-Example: `newer_than:30d in:inbox ({"Acme Corp" "BigCo"} OR {from:greenhouse.io from:lever.co from:myworkday.com from:ashbyhq.com})`
+Example: `deliveredto:[YOUR_EMAIL] newer_than:30d in:inbox ({"Acme Corp" "BigCo"} OR {from:greenhouse.io from:lever.co from:myworkday.com from:ashbyhq.com})`
 
 4. Call `search_threads` with `view: THREAD_VIEW_MINIMAL`, `pageSize: 50`, paginating via `pageToken` until exhausted or results are clearly outside the relevant window.
 
@@ -181,3 +182,4 @@ If this run pushed the count of applications with a **final** `outcome.md` statu
 7. **Never fabricate a match.** If the company can't be confidently identified from the email, it goes in "Unmatched," not a guess.
 8. **Read-only against Gmail itself.** This command reads and classifies; it does not label, archive, or delete anything in the user's mailbox.
 9. **All state is personal data.** `gmail_sync/state.json`, `job_search_tracker.csv`, and `documents/applications/**` are gitignored - never suggest committing them.
+10. **Account-scoped, always.** Every query in Step 3 carries `deliveredto:[YOUR_EMAIL]` - this is mandatory and never relaxed, per `CLAUDE.md`'s "Account Restriction (Gmail)" section.

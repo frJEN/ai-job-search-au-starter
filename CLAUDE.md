@@ -11,6 +11,15 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 4. **Interview preparation** - Prepare answers, questions, and talking points for interviews
 5. **Career strategy** - Advise on positioning and personal branding
 
+## Account Restriction (Gmail)
+
+All Gmail access anywhere in this workflow (`/gmail-sync`, and `/scrape`'s Gmail job-alert ingestion step) is hard-scoped to **`[YOUR_EMAIL]` only** — replace `[YOUR_EMAIL]` here and everywhere else it appears (`gmail-sync.md`, the job-scraper skill, `gmail-alert-sources.md`) with the single Gmail address you connect via claude.ai → Settings → Connectors, before using either workflow:
+
+- Every Gmail query built by either workflow **must** include `deliveredto:[YOUR_EMAIL]` as a mandatory, non-optional clause. This is mechanical, not just a promise: if the wrong account were ever connected, a query scoped this way returns nothing rather than silently reading the wrong inbox.
+- If a query returns fewer results than expected, the fix is checking claude.ai → Settings → Connectors (which Gmail account is connected) - **never** loosen or drop the `deliveredto:` clause to "get more results."
+- Never take any action - read, search, label, draft, delete - against any mailbox or message context implying a different account.
+- All Gmail access in this repo is **read-only** except `/gmail-sync`'s explicit, user-approved write flow (tracker/`outcome.md` updates only, after batch approval - see `gmail-sync.md`). `/scrape`'s ingestion step never labels, archives, drafts, or deletes anything.
+
 ## Candidate Profile
 
 <!-- This section is auto-populated by /setup. You can also fill it in manually. -->
