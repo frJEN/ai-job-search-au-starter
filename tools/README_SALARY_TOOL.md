@@ -8,7 +8,7 @@ The salary lookup tool (`salary_lookup.py`) lets you benchmark company salaries 
 
 ## How it works
 
-The tool reads a `salary_data.json` file in the repo root containing company salary benchmarks. It uses fuzzy matching to find companies by name, handling Danish/Nordic characters, legal suffixes (A/S, ApS), and common spelling variations.
+The tool reads a `salary_data.json` file in the repo root containing company salary benchmarks. It uses fuzzy matching to find companies by name, handling Danish/Nordic characters, legal suffixes (A/S, ApS, Pty Ltd, Ltd), and common spelling variations.
 
 The data format supports any index-based or absolute salary data. For example:
 - Index 100 = median salary, higher is better
@@ -41,6 +41,13 @@ The tool expects `salary_data.json` with this structure:
       "city": "Fredericia",
       "categories": {
         "all_employees": { "count": 200, "index": 105.2 }
+      }
+    },
+    {
+      "company": "Atlassian Pty Ltd",
+      "city": "Sydney",
+      "categories": {
+        "all_employees": { "count": 300, "index": 110.0 }
       }
     }
   ]
@@ -120,5 +127,5 @@ python3 salary_lookup.py --validate      # pre-flight check your salary_data.jso
 
 - The data file (`salary_data.json`) is **excluded from git** (see `.gitignore`). Your salary data may be proprietary or confidential.
 - If the data file is missing, `salary_lookup.py` exits with a helpful error message and the `/apply` workflow skips the salary benchmark step.
-- The fuzzy matcher handles Danish company name variations: legal suffixes, Nordic characters, anglicized spellings, and partial matches.
+- The fuzzy matcher handles Danish and Australian company name variations: legal suffixes (A/S, ApS, Pty Ltd, Ltd), Nordic characters, anglicized spellings, and partial matches.
 - `--validate` checks your data file for malformed category values and duplicate company names and prints a report, without performing a lookup.

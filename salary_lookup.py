@@ -32,12 +32,16 @@ SPELLING_VARIANTS = {
     "ö": "o", "ä": "ae", "ü": "u",
 }
 
-# Legal suffixes and noise to strip when matching company names
+# Legal suffixes and noise to strip when matching company names.
+# Danish/Nordic (a/s, aps, ...) and Australian (pty ltd, ltd, ...) suffixes
+# both need stripping since salary_data.json may contain either market's names.
 STRIP_PATTERNS = [
     r"\ba/s\b", r"\baps\b", r"\bi/s\b", r"\bp/s\b", r"\bk/s\b",
     r"\bivs\b", r"\bamba\b", r"\ba\.m\.b\.a\.\b",
+    r"\bpty\s+ltd\b", r"\bpty\b", r"\bltd\b", r"\blimited\b",
     r"\(vg\)", r"\(.*?\)",  # (VG) and other parentheticals
     r"\bdanmark\b", r"\bdenmark\b", r"\bscandinavia\b", r"\bnordic\b",
+    r"\baustralia\b",
     r"\bgroup\b", r"\bholding\b",
     r",\s*.*$",  # everything after comma (sub-entities)
 ]
@@ -413,7 +417,7 @@ def main():
         if args.city:
             print(f"  (filtered by city: {args.city})")
         print("\nTry a shorter or different name. Company names in the dataset")
-        print("may include legal suffixes like 'A/S' or 'ApS'.")
+        print("may include legal suffixes like 'A/S', 'ApS', 'Pty Ltd', or 'Ltd'.")
         sys.exit(1)
 
     if args.json:
