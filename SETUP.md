@@ -1,50 +1,50 @@
 # Setup Guide
 
-Step-by-step instructions for getting the AI Job Search framework running.
+Step-by-step instructions for getting the AI Job Search framework running, including this fork's Australia-specific tooling. Written for whichever path you took to get the code: no-git ZIP download or a git fork.
 
-## 1. Prerequisites
+## 1. Get the code
 
-### Claude Code
+**No git, no GitHub account needed:** go to [github.com/frJEN/jobhunt-au-starter](https://github.com/frJEN/jobhunt-au-starter), click **Code → Download ZIP**, and unzip it wherever you keep projects.
 
-Install Claude Code (Anthropic's CLI for Claude):
+**Comfortable with git?**
+
+```bash
+gh repo fork frJEN/jobhunt-au-starter --clone
+cd jobhunt-au-starter
+```
+
+Or fork manually on GitHub, then clone your fork. Either way, `upstream` should point at `MadsLorentzen/ai-job-search` for pulling framework updates later (step 9) — `git remote add upstream https://github.com/MadsLorentzen/ai-job-search.git` if it isn't set already.
+
+## 2. Install Claude Code
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
-You'll need an Anthropic API key or a Claude Pro/Team subscription. See the [Claude Code docs](https://docs.anthropic.com/en/docs/claude-code) for details.
+Or use the [native installer](https://docs.anthropic.com/en/docs/claude-code/getting-started) for your OS if you'd rather not install Node.js. You need a **Claude Pro/Max subscription** to run `claude` day-to-day — a separate Anthropic API key is only needed if you want to use the API directly, which this workflow doesn't require.
+
+## 3. Install the rest — or ask Claude Code to do it
+
+This framework needs Python (for the salary tool), Bun (for the job-search CLIs), a LaTeX distribution (to compile your CV/cover letter to PDF), and optionally `pdftotext` (for the ATS-parseability check). **You don't have to run any of this yourself** — open the folder in Claude Code (`cd jobhunt-au-starter && claude`) and say:
+
+> "Please check whether Python, Bun, and a LaTeX distribution are installed, and install whatever's missing."
+
+Claude Code will run the actual commands via its Bash tool and ask your permission before each one. The reference commands below are what it will run — useful if you want to do it yourself, or if something needs troubleshooting.
 
 ### Python
-
-Python 3.10+ is required for the salary lookup tool. Check with:
 
 ```bash
 python3 --version
 ```
 
-On Windows, `py --version` is often the most reliable check. If your system exposes Python as `python` instead of `python3`, use `python` in the commands below.
+3.10+ is required. On Windows, `py --version` is often the more reliable check.
 
 ### Bun (for job search tools)
 
-The job portal CLIs (four Danish portals plus the country-agnostic `linkedin-search` and `freehire-search` tools) are written in TypeScript and run with Bun.
-
-- macOS/Linux:
-
-```bash
-curl -fsSL https://bun.sh/install | bash
-```
-
-- Windows PowerShell:
-
-```powershell
-powershell -ExecutionPolicy Bypass -c "irm https://bun.sh/install.ps1 | iex"
-```
-
-If you prefer a package manager, `winget install Oven-sh.Bun` also works on Windows.
+- macOS/Linux: `curl -fsSL https://bun.sh/install | bash`
+- Windows PowerShell: `powershell -ExecutionPolicy Bypass -c "irm https://bun.sh/install.ps1 | iex"` (or `winget install Oven-sh.Bun`)
 
 ### LaTeX (for compiling CVs and cover letters)
-
-Install a LaTeX distribution to compile the generated `.tex` files to PDF:
 
 - **Windows:** [MiKTeX](https://miktex.org/download)
 - **macOS:** [MacTeX](https://tug.org/mactex/)
@@ -143,30 +143,22 @@ Push-Location $SmokeDir; xelatex -interaction=nonstopmode -halt-on-error cover_s
 
 ### Optional: pdftotext (for the ATS check)
 
-`/apply` runs an ATS parseability check on the compiled CV: it extracts the PDF's text layer and verifies contact details, reading order, and keyword coverage the way an applicant-tracking system sees them. This uses `pdftotext` from [poppler](https://poppler.freedesktop.org/), which is not part of TeX distributions:
+`/apply` runs an ATS parseability check on the compiled CV, and also uses it to extract the cover letter body for the application packet (step 8). This uses `pdftotext` from [poppler](https://poppler.freedesktop.org/), which is not part of TeX distributions:
 
 - **macOS:** `brew install poppler`
 - **Debian/Ubuntu:** `sudo apt install poppler-utils`
 - **Windows:** `choco install poppler`
 
-If `pdftotext` is missing, `/apply` skips the mechanical check with a warning and falls back to a visual keyword review — everything else works normally.
+If `pdftotext` is missing, `/apply` skips the mechanical check with a warning and falls back to a visual/LaTeX-source review instead — everything else works normally.
 
-## 2. Fork and clone
+## 4. Install job search CLI dependencies
 
-```bash
-gh repo fork MadsLorentzen/ai-job-search --clone
-cd ai-job-search
-```
-
-Or manually: fork on GitHub, then clone your fork.
-
-## 3. Install job search CLI dependencies
 Run these from the repository root.
 
 - PowerShell:
 
 ```powershell
-$tools = @("jobbank-search", "jobdanmark-search", "jobindex-search", "jobnet-search", "linkedin-search", "freehire-search")
+$tools = @("adzuna-search", "linkedin-search", "freehire-search")
 foreach ($tool in $tools) {
   Push-Location ".agents/skills/$tool/cli"
   bun install
@@ -176,16 +168,42 @@ foreach ($tool in $tools) {
 
 - Bash / zsh / Git Bash:
 ```bash
-for tool in jobbank-search jobdanmark-search jobindex-search jobnet-search linkedin-search freehire-search; do
+for tool in adzuna-search linkedin-search freehire-search; do
   (cd .agents/skills/$tool/cli && bun install)
 done
 ```
 
-For `linkedin-search` and `freehire-search` the install is optional: both have zero runtime dependencies and run with plain `bun`; `bun install` only pulls TypeScript dev types.
+All three have zero runtime dependencies and run with plain `bun`; `bun install` only pulls TypeScript dev types, so this step is optional but recommended (it also lets you run each tool's test suite).
 
-If you're outside Denmark, you can generate an equivalent search skill for your local job board with `/add-portal` — it scaffolds the same CLI structure for any public portal and test-runs a live query before registering. See the "Job search tools" section in the README.
+The Danish demo portals (Jobbank, Jobdanmark, Jobindex, Jobnet) ship as a reference for the `/add-portal` pattern — skip installing them unless you're specifically job-hunting in Denmark. If you need a job board this fork doesn't cover, run `/add-portal` inside Claude Code once you're set up.
 
-## 4. Run the setup interview
+## 5. Connect Gmail (for job-alert ingestion)
+
+Seek, Indeed, and Jora block automated scraping, so `/scrape` reads the job-alert emails they already send to your inbox instead — this needs the Gmail connector, not a terminal command.
+
+1. Go to [claude.ai](https://claude.ai) → **Settings → Connectors** and connect the Gmail account you use (or will use) for job-alert subscriptions.
+2. Subscribe to job alerts on Seek, Indeed, Jora, and/or LinkedIn from that same address, if you haven't already.
+3. Open `CLAUDE.md` and replace every `[YOUR_EMAIL]` placeholder in its "Account Restriction (Gmail)" section with that address. Also replace it in `.claude/commands/gmail-sync.md` and `.claude/skills/job-scraper/gmail-alert-sources.md` (same placeholder, three files).
+
+This isn't optional boilerplate: every Gmail query this repo builds is hard-scoped to `deliveredto:<your address>`, so if the wrong Gmail account is ever connected, queries return nothing instead of silently reading someone else's inbox.
+
+## 6. Get an Adzuna API key (optional)
+
+[Adzuna](https://developer.adzuna.com/) is an independent job aggregator with a free, official search API — it adds Australian job coverage on top of the Gmail-alert channel and LinkedIn.
+
+1. Register at [developer.adzuna.com](https://developer.adzuna.com/).
+2. Confirm the activation email (check spam if it doesn't arrive within a few minutes).
+3. Copy your `app_id` and `app_key` from the developer dashboard.
+4. Export them before running `/scrape`:
+   ```bash
+   export ADZUNA_APP_ID="your-app-id"
+   export ADZUNA_APP_KEY="your-app-key"
+   ```
+   Or add a `.env` file in the repo root (already covered by `.gitignore`) — **never commit the key itself**, only the instructions to obtain one.
+
+If you skip this, `/scrape` still runs via LinkedIn and Gmail-alert ingestion — you just miss Adzuna's independent listings.
+
+## 7. Run the setup interview
 
 Start Claude Code in the repository:
 
@@ -201,9 +219,9 @@ Then run the onboarding:
 
 Claude will offer three paths:
 
-- **Path A (documents folder):** Add your CV, LinkedIn export, diplomas, references, or past applications under `documents/`. Claude reads and cross-references them before proposing profile updates. This is best when you have several source files.
+- **Path A (documents folder):** Add your CV, LinkedIn export, diplomas, references, or past applications under `documents/`. Claude reads and cross-references them before proposing profile updates. Best when you have several source files.
 - **Path B (single CV import):** Share one CV/resume by mentioning the file with `@` or pasting the text. Claude extracts it and asks follow-up questions for anything missing.
-- **Path C (interview mode):** Answer structured interview questions section by section.
+- **Path C (interview mode):** Answer structured interview questions section by section. **If you don't have documents ready yet, this is the easiest starting point** — Claude asks, you answer, and it builds the profile from there.
 
 All three paths produce the same result: fully populated profile files.
 
@@ -232,25 +250,18 @@ You can update specific sections later:
 
 The `--section search` option is especially useful as your priorities evolve. It re-runs the search configuration interview and suggests role types you may not have considered based on your full profile.
 
-## 5. Optional: Set up salary benchmarking
-
-If you have salary data (from a union, salary survey, Glassdoor, or personal research):
-
-1. **Option A:** Create `salary_data.json` manually in the repo root (see `tools/README_SALARY_TOOL.md` for the format)
-2. **Option B:** Convert from Excel:
-   ```bash
-   pip install openpyxl
-   python3 tools/convert_salary_excel.py path/to/salary-data.xlsx --source "My Salary Data 2025"
-   ```
-
-This creates `salary_data.json` which the `/apply` workflow uses for salary benchmarking. If you skip this step, salary lookup is simply omitted.
-
-## 6. Test the workflow
+## 8. Test the full workflow
 
 Find a job posting you're interested in, then:
 
 ```
-/apply https://jobindex.dk/job/1234567
+/scrape
+```
+
+or go straight to a specific posting:
+
+```
+/apply https://seek.com.au/job/12345678
 ```
 
 Or paste the job description directly:
@@ -264,48 +275,50 @@ Claude will:
 2. Ask if you want to proceed
 3. Draft a tailored CV and cover letter
 4. Have a reviewer agent critique the drafts
-5. Revise and present the final output
+5. Revise, compile both to PDF, and inspect the layout
+6. Generate `documents/applications/<company>_<role>/application_packet.md` — hand this to the [Claude in Chrome](https://claude.com/blog/claude-in-chrome) extension, or use it for manual form-filling. Either way, review the completed form yourself before submitting — this workflow never submits on your behalf.
 
-## 7. Compile your documents
+## 9. Optional: set up salary benchmarking
 
-After `/apply` creates the LaTeX files:
+If you have salary data (from a union, salary survey, Glassdoor, or personal research):
 
-```bash
-# Bash / zsh / Git Bash
-cd cv && lualatex main_<company>_<role>.tex && cd ..
-cd cover_letters && xelatex cover_<company>_<role>.tex && cd ..
-```
+1. **Option A:** Create `salary_data.json` manually in the repo root (see `tools/README_SALARY_TOOL.md` for the format)
+2. **Option B:** Convert from Excel:
+   ```bash
+   pip install openpyxl
+   python3 tools/convert_salary_excel.py path/to/salary-data.xlsx --source "My Salary Data 2025"
+   ```
 
-```powershell
-# PowerShell
-Set-Location cv; lualatex main_<company>_<role>.tex; Set-Location ..
-Set-Location cover_letters; xelatex cover_<company>_<role>.tex; Set-Location ..
-```
+This creates `salary_data.json` which the `/apply` workflow uses for salary benchmarking. If you skip this step, salary lookup is simply omitted — the salary-floor check against Australia's minimum-wage/award standard still runs regardless (see `04-job-evaluation.md`).
 
-These commands apply to the stock templates (moderncv CV, `cover.cls` cover letter). If you'd rather use your own LaTeX template, run `/add-template` — it captures the template's compile engine, fonts, style rules, and page limit, test-compiles it, and wires it into `/apply`. See the "LaTeX templates" section in the README.
+## 10. Pulling upstream updates into your fork
 
-## 8. Pulling upstream updates into your fork
+Upstream (`MadsLorentzen/ai-job-search`) keeps improving the methodology files your fork has personalized, so plan for updates from day one:
 
-Upstream keeps improving the methodology files your fork has personalized, so plan for updates from day one:
+**Prefer releases over raw `master`.** Tagged [releases](https://github.com/MadsLorentzen/ai-job-search/releases) are vetted checkpoints, each described in that project's `CHANGELOG.md`. Fetch tags with `git fetch upstream --tags` and merge a release (for example `git merge v1.0.0`) when you want stability; pull `master` directly only when you specifically want the latest unreleased changes.
 
-**Prefer releases over raw `master`.** Tagged [releases](../../releases) are vetted checkpoints, each described in [CHANGELOG.md](CHANGELOG.md). Updating to a tag pulls a stable, documented state instead of whatever `master` happens to be mid-review. Fetch tags with `git fetch upstream --tags` and merge a release (for example `git merge v1.0.0`) when you want stability; pull `master` directly only when you specifically want the latest unreleased changes. The steps below apply either way - substitute the release tag for `upstream/master` where you see it.
-
-1. **Commit your personalization to your fork.** `/setup` edits CLAUDE.md and the profile skill files in place — those edits are *yours*, and your fork is private working space, so commit them. The genuinely sensitive files (tracker, salary data, `documents/`, application archives) are gitignored and never enter git either way. An uncommitted working tree is the most common reason `git pull` refuses to merge at all (`Your local changes ... would be overwritten`).
+1. **Commit your personalization to your fork.** `/setup` edits `CLAUDE.md` and the profile skill files in place — those edits are *yours*, and your fork is your own working space, so commit them. The genuinely sensitive files (tracker, salary data, `documents/`, application archives) are gitignored and never enter git either way.
 2. **Preview what changed before pulling:**
    ```bash
-   git fetch upstream    # or origin, if you cloned the template directly
+   git fetch upstream
    python3 tools/check_upstream_updates.py
    ```
-   It compares the `framework_version` markers in your framework files against upstream and lists exactly which methodology files changed, with the diff command for each.
-3. **Merge normally.** `git merge upstream/master` (or `git pull`) three-way-merges upstream's edits around your personalization; because methodology edits rarely touch the lines `/setup` filled in, most updates land cleanly. A conflict in a personalized file is a *feature*, not a failure — it means upstream changed methodology in a section you customized, and the version marker plus its changelog commit tell you why. Resolve by keeping your data and adopting the methodology change around it.
+   It compares the `framework_version` markers in your framework files against upstream and lists exactly which methodology files changed.
+3. **Merge normally.** `git merge upstream/master` (or `git pull`) three-way-merges upstream's edits around your personalization; because methodology edits rarely touch the lines `/setup` filled in, most updates land cleanly. A conflict in a personalized file is a *feature*, not a failure — it means upstream changed methodology in a section you customized. Resolve by keeping your data and adopting the methodology change around it. This fork's own Australia-specific files (`scrape.md`, `gmail-alert-sources.md`, `adzuna-search/`) aren't in upstream, so they never conflict — pull updates the same way regardless.
 
 ## Troubleshooting
 
 ### "salary_data.json not found"
-This is expected if you haven't set up salary benchmarking. The `/apply` workflow skips this step automatically.
+Expected if you haven't set up salary benchmarking (step 9). The `/apply` workflow skips this step automatically.
 
 ### Job search CLI tools not working
 Make sure Bun is installed and you ran `bun install` in each CLI directory. The tools require network access to fetch job listings.
+
+### `/scrape`'s Gmail step finds nothing
+Check claude.ai → Settings → Connectors — confirm the connected Gmail account matches the address you put in place of `[YOUR_EMAIL]`, and that you're actually subscribed to job alerts from Seek/Indeed/Jora/LinkedIn on that address. Never loosen the `deliveredto:` clause to "get more results" — a wrong-account connection should return nothing, not something.
+
+### Adzuna search returns an auth error
+`ADZUNA_APP_ID`/`ADZUNA_APP_KEY` aren't set, or the account hasn't confirmed its activation email yet. Check your inbox for the Adzuna confirmation email if you registered recently.
 
 ### LaTeX compilation errors
 - CV: uses `lualatex` (pdflatex often fails on modern MiKTeX with `fontawesome5` font-expansion errors; lualatex handles the same sources cleanly)
@@ -314,10 +327,3 @@ Make sure Bun is installed and you ran `bun install` in each CLI directory. The 
 
 ### Fonts not found in cover letter
 The cover letter template expects fonts in `cover_letters/OpenFonts/fonts/`. Make sure this directory exists and contains the Lato and Raleway font files.
-
-### Stale `.claude/settings.local.json` from an older clone
-Shared Claude Code permissions now live in `.claude/settings.json` (scoped to `bun run`, `python salary_lookup.py`, and `python3 salary_lookup.py`). Earlier versions of this repo committed a broader `.claude/settings.local.json` that pre-approved `Bash(curl:*)`, `Bash(python:*)` and `Bash(bun:*)`. If you cloned before that change, git leaves the old file behind in your working copy, and its permissions still apply on top of `settings.json`. Delete it (or trim it to your own personal overrides):
-
-```bash
-rm .claude/settings.local.json
-```
