@@ -41,7 +41,7 @@
 
 **1. 下载工具包**
 
-打开 [github.com/frJEN/jobhunt-au-starter](https://github.com/frJEN/jobhunt-au-starter),点击绿色的 **Code** 按钮,选择 **Download ZIP**,下载后解压到一个好找的地方(比如桌面)。
+打开 [github.com/frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter),点击绿色的 **Code** 按钮,选择 **Download ZIP**,下载后解压到一个好找的地方(比如桌面)。
 
 **2. 安装 Claude Code**
 
@@ -52,7 +52,7 @@
 打开终端程序(Mac 上搜索 "Terminal";Windows 上用 Claude Code 安装程序帮你配置好的那个终端),把下面这两行复制粘贴进去,记得把路径改成你第 1 步解压的实际位置:
 
 ```bash
-cd path/to/jobhunt-au-starter
+cd path/to/ai-job-search-au-starter
 claude
 ```
 

@@ -4,13 +4,13 @@ Step-by-step instructions for getting the AI Job Search framework running, inclu
 
 ## 1. Get the code
 
-**No git, no GitHub account needed:** go to [github.com/frJEN/jobhunt-au-starter](https://github.com/frJEN/jobhunt-au-starter), click **Code → Download ZIP**, and unzip it wherever you keep projects.
+**No git, no GitHub account needed:** go to [github.com/frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter), click **Code → Download ZIP**, and unzip it wherever you keep projects.
 
 **Comfortable with git?**
 
 ```bash
-gh repo fork frJEN/jobhunt-au-starter --clone
-cd jobhunt-au-starter
+gh repo fork frJEN/ai-job-search-au-starter --clone
+cd ai-job-search-au-starter
 ```
 
 Or fork manually on GitHub, then clone your fork. Either way, `upstream` should point at `MadsLorentzen/ai-job-search` for pulling framework updates later (step 11) — `git remote add upstream https://github.com/MadsLorentzen/ai-job-search.git` if it isn't set already.
@@ -25,7 +25,7 @@ Or use the [native installer](https://docs.anthropic.com/en/docs/claude-code/get
 
 ## 3. Install the rest — or ask Claude Code to do it
 
-This framework needs Python (for the salary tool), Bun (for the job-search CLIs), a LaTeX distribution (to compile your CV/cover letter to PDF), and optionally `pdftotext` (for the ATS-parseability check). **You don't have to run any of this yourself** — open the folder in Claude Code (`cd jobhunt-au-starter && claude`) and say:
+This framework needs Python (for the salary tool), Bun (for the job-search CLIs), a LaTeX distribution (to compile your CV/cover letter to PDF), and optionally `pdftotext` (for the ATS-parseability check). **You don't have to run any of this yourself** — open the folder in Claude Code (`cd ai-job-search-au-starter && claude`) and say:
 
 > "Please check whether Python, Bun, and a LaTeX distribution are installed, and install whatever's missing."
 

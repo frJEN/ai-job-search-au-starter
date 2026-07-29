@@ -41,7 +41,7 @@ Do these steps once, in order. Whenever a step says "type this," you're typing i
 
 **1. Download the toolkit**
 
-Go to [github.com/frJEN/jobhunt-au-starter](https://github.com/frJEN/jobhunt-au-starter), click the green **Code** button, choose **Download ZIP**, then unzip it somewhere easy to find (like your Desktop).
+Go to [github.com/frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter), click the green **Code** button, choose **Download ZIP**, then unzip it somewhere easy to find (like your Desktop).
 
 **2. Install Claude Code**
 
@@ -52,7 +52,7 @@ This is the assistant itself. Follow the [install guide](https://docs.anthropic.
 Open your terminal app (search "Terminal" on Mac, or use the one the Claude Code installer sets up on Windows), and copy-paste this, replacing the path with wherever you unzipped the folder in step 1:
 
 ```bash
-cd path/to/jobhunt-au-starter
+cd path/to/ai-job-search-au-starter
 claude
 ```
 

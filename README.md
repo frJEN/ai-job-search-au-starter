@@ -46,9 +46,9 @@ files ready    to your inbox    with fit ratings     (LaTeX, tailored)
 
 ### 1. Get the code
 
-Go to [github.com/frJEN/jobhunt-au-starter](https://github.com/frJEN/jobhunt-au-starter), click the green **Code** button, choose **Download ZIP**, and unzip it somewhere on your computer. That's it — no `git clone`, no GitHub account.
+Go to [github.com/frJEN/ai-job-search-au-starter](https://github.com/frJEN/ai-job-search-au-starter), click the green **Code** button, choose **Download ZIP**, and unzip it somewhere on your computer. That's it — no `git clone`, no GitHub account.
 
-*(Comfortable with git? `gh repo fork frJEN/jobhunt-au-starter --clone` or the ordinary GitHub fork-and-clone works too — see [SETUP.md](SETUP.md) for the git path.)*
+*(Comfortable with git? `gh repo fork frJEN/ai-job-search-au-starter --clone` or the ordinary GitHub fork-and-clone works too — see [SETUP.md](SETUP.md) for the git path.)*
 
 ### 2. Install Claude Code
 
@@ -57,7 +57,7 @@ Follow the [Claude Code install guide](https://docs.anthropic.com/en/docs/claude
 ### 3. Open the folder in Claude Code
 
 ```bash
-cd path/to/jobhunt-au-starter
+cd path/to/ai-job-search-au-starter
 claude
 ```
 
@@ -133,7 +133,7 @@ Postings are treated as untrusted input (the workflow follows no instructions em
 ## File structure
 
 ```
-jobhunt-au-starter/
+ai-job-search-au-starter/
 ├── CLAUDE.md                          # Main candidate profile + workflow rules (incl. Gmail account restriction)
 ├── .claude/
 │   ├── commands/
