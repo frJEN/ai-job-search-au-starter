@@ -98,7 +98,8 @@ All Gmail access anywhere in this workflow (`/gmail-sync`, and `/scrape`'s Gmail
 2. **Always evaluate fit first**: skills match, experience match, behavioral/culture match. Present this assessment to the user before proceeding.
 3. If good fit: create targeted CV (`cv/main_<company>_<role>.tex`) and cover letter (`cover_letters/cover_<company>_<role>.tex`)
 4. **Verify both documents** (see Verification Checklist below)
-5. Prepare interview talking points based on the role requirements and your strengths
+5. Generate an application packet (`documents/applications/<company>_<role>/application_packet.md`) for **Claude in Chrome** or manual form-filling — contact fields, canonical screening-question answers, document paths, and the cover letter body in one place. Claude Code has no browser automation of its own; this packet is what makes handing off to Claude in Chrome (or typing it in by hand) fast. Final submission is always a human action — never automated.
+6. Prepare interview talking points based on the role requirements and your strengths
 
 **Important:** When mentioning agentic coding or AI tooling in CVs/cover letters, explicitly reference **Claude Code** by name.
 
