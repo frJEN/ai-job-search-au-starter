@@ -4,13 +4,13 @@
 
 # AI Job Search — Australia Starter
 
-*在你自己的电脑上运行的求职助手,专门为澳洲就业市场打造。*
+*在你自己的电脑上运行的求职助手,专门为澳洲就业市场打造。对非技术用户也非常友好,工作流程以自动化为主。*
 
 **语言 / Language:** [English (full)](README.md) · [Plain-English beginner guide](README.beginner.md) · 中文(本页)
 
-> 如果这个项目对你有帮助,欢迎在 GitHub 上点个 ⭐ star,能帮助更多人发现它;如果你想直接支持开发,也非常欢迎请我喝杯咖啡: [Buy Me a Coffee](https://buymeacoffee.com/frJEN) · [爱发电 Afdian](https://afdian.com/a/frJEN)。完全随意,不点也没关系 —— 好好用就行。
+> 如果这个项目对你有帮助,在 GitHub 上点个 ⭐ star 能帮助更多人发现它,对我来说也意义重大,谢谢你的支持!
 
-> 说明:这是一个独立的开源项目,与 Anthropic 没有任何关联、未获其背书或赞助。**本项目没有任何加密货币、代币或付费赞助计划**,任何声称与本项目有关的此类信息均为诈骗。
+> 说明:这是一个独立的开源项目,与 Anthropic 没有任何关联、未获其背书或赞助。**本项目没有任何加密货币、代币或付费赞助计划**,任何声称与本项目有关的此类说法均为诈骗。
 
 ---
 

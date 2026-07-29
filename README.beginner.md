@@ -4,13 +4,15 @@
 
 # AI Job Search — Australia Starter
 
-*The job search that runs on your machine, tuned for the Australian market.*
+*The job search that runs on your machine, tuned for the Australian market. Super user friendly for non-technical users, workflow predominantly automated.*
 
 **Read this in:** [English (full)](README.md) · Plain-English beginner guide (this page) · [中文](README.zh.md)
 
-> If this project is useful to you, a ⭐ star on GitHub helps others find it — and if you'd like to support development directly, that's always appreciated too: [Buy Me a Coffee](https://buymeacoffee.com/frJEN) · [爱发电 Afdian](https://afdian.com/a/frJEN). Totally optional either way — enjoy the tool.
+> If this project is useful to you, a ⭐ star on GitHub helps others find it and would mean a great deal to me, thanks for your support!
 
-> Note: independent open-source project, not affiliated with Anthropic. No cryptocurrency, no token, no paid sponsorship program — anything claiming otherwise is a scam.
+> Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.
+>
+> This project has **no affiliated cryptocurrency, token, or paid sponsorship program**. Anything claiming otherwise is unauthorized and should be treated as a scam.
 
 ---
 
