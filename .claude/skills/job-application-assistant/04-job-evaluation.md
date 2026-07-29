@@ -127,6 +127,8 @@ Interpret results relative to the baseline defined in the data file's metadata. 
 
 If the salary tool is not configured, skip this section.
 
+**Salary floor check (always run, tool or no tool):** if the posting states a salary or rate, compare it against the relevant minimum-wage/award standard for that country and role (e.g. Fair Work award rates in Australia). This is a **flag, not an exclude** — a posting that looks underpaid is surfaced to the user with a note, never silently dropped from consideration.
+
 ## Output Format
 
 Present the evaluation as:
