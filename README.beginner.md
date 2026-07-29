@@ -92,7 +92,7 @@ It will ask you questions about your background, skills, and what kind of job yo
 /platform-sync
 ```
 
-This logs into job sites like LinkedIn/Seek/Indeed *in your own browser, as you* and sets up job alerts pointed at the Gmail address from step 5. It will explain and ask for your OK before each real action — read what it tells you before approving. If you'd rather do this by hand, it also gives you a manual, step-by-step alternative.
+This logs into job sites like LinkedIn/Seek/Indeed/Jora/Fuse Recruitment/Synergie *in your own browser, as you* and sets up job alerts pointed at the Gmail address from step 5. It will explain and ask for your OK before each real action — read what it tells you before approving. If you'd rather do this by hand, it also gives you a manual, step-by-step alternative.
 
 Setup is done. 🎉
 
