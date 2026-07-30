@@ -15,6 +15,8 @@ An AI-powered job application framework built on [Claude Code](https://claude.co
 > Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.
 >
 > This project has **no affiliated cryptocurrency, token, or paid sponsorship program**. Anything claiming otherwise is unauthorized and should be treated as a scam.
+>
+> This project is intended for **personal, individual job-seeking use** — not commercial or agency use (e.g. running it on behalf of multiple clients, or embedding it in a paid recruiting product).
 
 ## What this is
 
@@ -27,11 +29,11 @@ This particular repo ([frJEN/ai-job-search-au-starter](https://github.com/frJEN/
 **This fork adds Australia-specific job discovery on top of that core:**
 - **`adzuna-search`** — an official, key-based CLI against the [Adzuna](https://developer.adzuna.com/) Job Search API for independent Australian job coverage.
 - **Gmail job-alert ingestion** — Seek, Indeed, Jora, Fuse Recruitment, and Synergie block or don't offer automated scraping, so instead `/scrape` reads the job-alert emails these platforms already send to your own inbox, via the official Gmail connector; LinkedIn's alert emails are read the same way as a second channel alongside the existing `linkedin-search` CLI. Hard-scoped to the one mailbox you connect — see `CLAUDE.md`'s Account Restriction section.
-- **`/platform-sync`** — refines your profile on each of those platforms and sets up the job alerts above for you, via the [Claude in Chrome](https://claude.com/blog/claude-in-chrome) extension acting in your own signed-in browser session. Read its caution notes before using — see [Quick start](#quick-start) step 8.
+- **`/platform-sync`** (optional) — refines your profile on each of those platforms and sets up the job alerts above for you, via the [Claude in Chrome](https://claude.com/blog/claude-in-chrome) extension acting in your own signed-in browser session. Read its caution notes before using — see [Quick start](#quick-start) step 8, which also documents a manual alternative if you'd rather not automate this.
 - **Application packets** — `/apply` now also generates a bundled `application_packet.md` (contact fields, screening-question answers, document paths, cover letter text) so Claude in Chrome — or you, manually — can fill out the actual application form without re-typing everything. Final submission is always a human action, never automated.
 
 ```
-/setup → /platform-sync → /scrape → /rank → /apply <url> → /interview → /outcome → (calibrates back into /setup)
+/setup → /platform-sync (optional) → /scrape → /rank → /apply <url> → /interview → /outcome → (calibrates back into /setup)
    |            |             |         |          |             |             |
 profile      alerts set    job       ranked     tailored CV    talking       record what
 built        up, flowing   matches   shortlist  + cover letter, points from  happened;

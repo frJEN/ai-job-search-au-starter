@@ -220,6 +220,7 @@ Documents cover skills, experience, education, references, and behavioral signal
 - Deal-breakers and must-haves
 - Salary expectations / baseline (optional)
 - Commute or location constraints (if not visible from CV)
+- Work rights / citizenship / visa sponsorship answers (optional — see Path C Section 1 below for phrasing)
 - Job search configuration (use the questions from Path C Section 9 below)
 
 Then proceed to Step 3 to populate the non-skill files (`CLAUDE.md`, `cv/main_example.tex`, `.claude/skills/job-scraper/search-queries.md`). Step 3 will detect that the seven skill files are already populated and skip those substeps.
@@ -250,6 +251,7 @@ Ask about:
 - Languages spoken (with proficiency levels)
 - Current employment status
 - Family/commute constraints (if any)
+- **Optional:** work rights, citizenship/PR status, and whether they'd need visa sponsorship — see `04-job-evaluation.md`'s "Screening-Question Answers" section for why this is worth answering once. Anyone can decline; if skipped, `/apply` asks per application instead of guessing.
 
 ### Section 2: Education
 For each degree:
@@ -345,6 +347,8 @@ Replace skill match areas with the user's actual skills:
 - Weak match areas: [skills they lack]
 
 Update career goals and motivation filters with their actual preferences.
+
+If the user answered the optional work-rights/citizenship/sponsorship questions, fill the "Screening-Question Answers" section's three placeholders with their actual answers. If they skipped it, leave each placeholder as "ask the user" — do not invent an answer.
 
 ### 5. Update `05-cv-templates.md` *(Path B and C; skip if Path A populated it)*
 Add role-specific profile statement templates based on their background.
