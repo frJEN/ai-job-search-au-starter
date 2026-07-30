@@ -30,6 +30,14 @@ If the candidate's permit also constrains *hours* or *start date* (a student vis
 
 A role that fails this gate is not scored and not drafted. Everything below applies only to roles that pass it.
 
+## Screening-Question Answers
+
+Self-declared answers, collected once during `/setup` and reused verbatim by `/apply`'s application-packet step instead of re-derived under pressure on every posting. **Optional** — skip this during `/setup` if you'd rather answer per application. A skipped field falls back to "ask the user," the same convention `/apply` already uses for availability and salary expectation — never a guess, never left blank.
+
+- Legally entitled to work in [YOUR_COUNTRY]? → [YOUR_WORK_RIGHTS_ANSWER, or "ask the user" if skipped]
+- Citizen or permanent resident? → [YOUR_CITIZENSHIP_STATUS, or "ask the user" if skipped]
+- Require visa sponsorship? → [YOUR_SPONSORSHIP_ANSWER, or "ask the user" if skipped]
+
 ## Scoring Dimensions
 
 Evaluate each job posting against these five dimensions, plus the two salary checks below:

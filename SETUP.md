@@ -198,7 +198,7 @@ This is **not required** and **not yet verified** by this repo against a real ma
 1. Read `.claude/commands/outlook-sync.md` first — it explains what this does, what it doesn't do yet, and links the reference MCP server implementation.
 2. Set up a self-hosted Outlook MCP server (e.g. [`ryaker/outlook-mcp`](https://github.com/ryaker/outlook-mcp), a community project — not built or vetted by this repo's maintainers, review it yourself before trusting it with mailbox access):
    - Register an application in the [Azure Portal](https://portal.azure.com) → **App registrations** → **New registration**.
-   - Add API permissions for `Mail.ReadWrite`, `Calendars.Read` (delegated).
+   - Add API permissions for `Mail.Read` (delegated) — this workflow is read-only, so don't grant `Mail.ReadWrite` or any calendar scope; nothing here touches the calendar.
    - Create a client secret and note its **value** (not the Secret ID) alongside the Application (client) ID and Tenant ID.
    - Follow that project's own install/config instructions to run the server and connect it to Claude Code as an MCP server.
 3. Once connected, `outlook-sync.md`'s tool calls are **provisional** — the exact tool names/schemas depend on the MCP server you configured, and haven't been confirmed live. Expect to adjust them against what your server actually exposes.

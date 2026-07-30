@@ -13,6 +13,8 @@
 > Note: This is an independent open-source project and is not affiliated with, endorsed by, sponsored by, or maintained by Anthropic. Anthropic and Claude Code are referenced only to describe the toolchain this workflow uses.
 >
 > This project has **no affiliated cryptocurrency, token, or paid sponsorship program**. Anything claiming otherwise is unauthorized and should be treated as a scam.
+>
+> This project is intended for **personal, individual job-seeking use** — not commercial or agency use (e.g. running it on behalf of multiple clients, or embedding it in a paid recruiting product).
 
 ---
 
