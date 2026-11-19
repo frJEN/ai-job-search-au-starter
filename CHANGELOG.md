@@ -18,6 +18,17 @@ the sections below since they're not part of upstream's release versioning.
 
 ## [Unreleased]
 
+- **Selective upstream sync to v2.0.0** (not a merge). Imported `posting_guard.py`, `page_decode.py`, `verify_layout.py` and the `linkedin-search`/`freehire-search` CLIs, and narrowed the blanket `bun run` grant to per-portal grants. What was deliberately left out, and why, is in commit `chore(upstream): import posting_guard…`. The `upstream` remote now points at `ai-job-search-dev/ai-job-search`.
+- **`10-market-au.md`**: Australian rules in one file, read only when they apply.
+  - Eligibility (APS, clearances, work rights, visas).
+  - Super-aware salary floor.
+  - Public-sector selection criteria and pitch.
+  - CV conventions.
+
+  The generic files point to it with one line each.
+- **`CV pages:` setting** (CLAUDE.md Identity) replaces the hard-coded 2-page rule; `/setup` asks for it.
+- **`/apply`**: posting-integrity gate in Step 0, measured layout checks in Step 5b, public-sector criteria always offered.
+
 - **freehire-search: full descriptions come back with the search** - `search` now calls
   freehire's agent search endpoint (`/api/v1/agent/jobs/search`), which serves each hit's
   complete description instead of the search index's truncated preview. A 20-role search is
