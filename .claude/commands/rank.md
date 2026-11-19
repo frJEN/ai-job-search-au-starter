@@ -57,7 +57,7 @@ Each agent returns a JSON array, one object per job:
 }
 ```
 
-`salary_floor` is `null` when the posting states no salary/rate to check.
+`salary_floor` is `null` when the posting states no salary/rate to check. Australian postings: convert to base first (`10-market-au.md` § Salary; no lookups in `/rank`).
 
 Scoring uses the dimension definitions from `04-job-evaluation.md` verbatim. The honesty rule applies to triage too: gaps are stated, never smoothed over, and a posting that is a poor fit gets a low score even if it looks prestigious.
 

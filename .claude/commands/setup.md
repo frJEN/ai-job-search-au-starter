@@ -251,7 +251,7 @@ Ask about:
 - Languages spoken (with proficiency levels)
 - Current employment status
 - Family/commute constraints (if any)
-- **Optional:** work rights, citizenship/PR status, and whether they'd need visa sponsorship — see `04-job-evaluation.md`'s "Screening-Question Answers" section for why this is worth answering once. Anyone can decline; if skipped, `/apply` asks per application instead of guessing.
+- **Optional:** work rights, citizenship/PR status, and whether they'd need visa sponsorship — see `04-job-evaluation.md`'s "Screening-Question Answers" section for why this is worth answering once. Anyone can decline; if skipped, `/apply` asks per application instead of guessing. If they hold a visa, ask for the subclass too (`10-market-au.md` § Eligibility uses it).
 
 ### Section 2: Education
 For each degree:

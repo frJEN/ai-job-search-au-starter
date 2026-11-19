@@ -28,6 +28,8 @@ Read the posting's eligibility / work rights / "who can apply" section **verbati
 
 If the candidate's permit also constrains *hours* or *start date* (a student visa with a term-time cap, a permit that begins on graduation), record that as a second gate under this section during `/setup`, with the specific dates. Do not merge it with the eligibility question above — they fail for different reasons and need different answers.
 
+**Australia:** if the posting mentions citizenship, a security clearance, sponsorship or work rights, or the profile records a visa, read `10-market-au.md` § Eligibility.
+
 A role that fails this gate is not scored and not drafted. Everything below applies only to roles that pass it.
 
 ## Screening-Question Answers
@@ -116,6 +118,8 @@ Does this role advance career goals and contain tasks that energize?
 ### 6. Salary Floor Check (always run)
 
 If the posting states a salary or rate, compare it against the relevant minimum-wage/award standard for that country and role (e.g. Fair Work award rates in Australia). This is a **flag, not an exclude** — a posting that looks underpaid is surfaced to the user with a note, never silently dropped from consideration. This check does not depend on the benchmark tool below and always runs, even if that tool isn't configured.
+
+**Australia:** convert the figure to base pay first (super-inclusive packages), per `10-market-au.md` § Salary.
 
 ### 7. Salary Benchmark (Optional, requires the salary tool)
 
