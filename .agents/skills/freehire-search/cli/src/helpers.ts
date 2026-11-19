@@ -321,7 +321,9 @@ export function visibleHtml(html: string): string {
     if (!m[2] || !isHiddenTag(m[2])) continue
     const tag = m[1].toLowerCase()
     let end = open.lastIndex
-    if (!VOID_TAGS.has(tag) && !m[0].endsWith("/>")) {
+    // `/>` closes only void elements: browsers ignore it on any other tag,
+    // so `<span hidden/>text</span>` still hides the text.
+    if (!VOID_TAGS.has(tag)) {
       // Skip to the matching close tag, counting nested same-name elements. An
       // unclosed hidden element runs to the end: failing closed drops visible
       // text, failing open would leak the hidden text.
@@ -332,7 +334,7 @@ export function visibleHtml(html: string): string {
       let s: RegExpExecArray | null
       while ((s = same.exec(src)) !== null) {
         if (s[1]) depth--
-        else if (!s[0].endsWith("/>")) depth++
+        else depth++
         if (depth === 0) {
           end = same.lastIndex
           break

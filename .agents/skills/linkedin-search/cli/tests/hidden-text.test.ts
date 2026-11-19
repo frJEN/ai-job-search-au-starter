@@ -18,6 +18,8 @@ const HIDDEN_MARKUP = [
   '<script>alert("HIDDEN script")</script>',
   '<div style="display:none">HIDDEN styled <div>HIDDEN nested</div> HIDDEN after nesting</div>',
   "<span hidden>HIDDEN attribute</span>",
+  "<span hidden/>HIDDEN self-closed span</span>",
+  '<div style="display:none"/>HIDDEN self-closed div</div>',
   '<p style="mso-hide:all">HIDDEN mso</p>',
   '<p aria-hidden="true" title="a hidden gem">Visible despite the words.</p>',
 ].join("");
