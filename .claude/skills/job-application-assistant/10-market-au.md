@@ -36,3 +36,21 @@ Award rates and most salary data are **base pay excluding super**. Before the Sa
   - Read the band from the posting.
   - If the posting doesn't state it: `/apply` may look up that agency's EA once and cite it; `/rank` reports "band not stated, not checked".
   - Don't rely on a remembered pay table.
+
+## Public-sector applications: selection criteria and the pitch
+
+Applies to APS, state/territory and local government, universities, and many not-for-profits. These jobs are often decided on this document more than on the CV, so `/apply` always offers it (`08-application-forms.md`, "When this applies"). The application kit sets one of three formats:
+
+1. **Pitch / statement of claims.** One statement, usually 1–2 pages or 500–1,000 words. Use the kit's own limit. Don't repeat the CV; pick specific examples that show the duties the kit lists.
+2. **Addressed criteria.** One response per criterion, under the criterion's text verbatim, often with a per-criterion word limit.
+3. **Targeted questions.** Two or three form questions with character caps. Use the "hard character limits" method in `08-application-forms.md`.
+
+Rules:
+- Build each claim in STAR (`07-interview-prep.md` § STAR Format), with the weight on Action and Result.
+- Use one or two of the strongest examples per criterion, not a list ([APSC: Cracking the Code](https://www.apsc.gov.au/working-aps/joining-aps/cracking-code/3-applying-aps-job-cracking-code)).
+- Pitch at the advertised level. For APS roles, choose examples that show the scope the [Work Level Standards](https://legacy.apsc.gov.au/work-level-standards-aps-level-and-executive-level-classifications) describe for that classification, and never claim scope the profile doesn't support.
+- Mirror the kit's wording in each response's opening sentence; panels often score against it.
+- A criterion the profile genuinely can't meet gets a short, honest transferable-skills answer, or a note flagging the gap to the user. Never invent an example.
+- Grounding and output follow `08-application-forms.md` unchanged. In addition, state each criterion's word count against its limit, and add a `NOTE TO SELF` mapping each example to the interview questions it invites.
+
+APS postings almost always carry a citizenship condition and often a clearance, so run § Eligibility first.

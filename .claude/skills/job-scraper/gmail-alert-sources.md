@@ -144,6 +144,10 @@ Two distinct alert senders, both carrying real postings:
   Once a real alert arrives, sample it with `get_thread` (`messageFormat: FULL_CONTENT`) and fill in
   this section the same way as the platforms above.
 
+## APSJobs (Australian Public Service)
+
+- **Status: alert structure not yet observed.** APSJobs (`apsjobs.gov.au`) carries most APS roles and can email saved-search alerts. Do not guess a sender or body structure. Once the first alert arrives, sample it with `get_thread` (`messageFormat: FULL_CONTENT`) and fill in this section like Fuse above.
+
 ## Adding another platform
 
 Not every Australian job board is listed above. If you subscribe to alerts from one that isn't (a niche or regional board, a recruitment agency, etc.), don't guess its sender address or body structure — wait for a real alert to land, sample it the same way as the platforms above, and add a new section here before wiring it into `/scrape` Step 1d.
