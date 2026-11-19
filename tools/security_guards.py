@@ -36,7 +36,10 @@ errors: list[str] = []
 ALLOWED_PERMISSIONS = {
     "Skill(job-application-assistant)",
     "Skill(scrape)",
-    "Bash(bun run:*)",
+    # Per-portal grants, not the blanket `bun run:*` (upstream #396).
+    "Bash(bun run .agents/skills/adzuna-search/cli/src/cli.ts:*)",
+    "Bash(bun run .agents/skills/freehire-search/cli/src/cli.ts:*)",
+    "Bash(bun run .agents/skills/linkedin-search/cli/src/cli.ts:*)",
     "Bash(python salary_lookup.py:*)",
     "Bash(python3 salary_lookup.py:*)",
     "Bash(pdftotext:*)",
