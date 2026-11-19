@@ -20,7 +20,9 @@ All CVs use the moderncv LaTeX package with the "banking" style and "blue" color
 cd cv && lualatex -interaction=nonstopmode main_<company>_<role>.tex
 ```
 
-Expected output: `Output written on main_<company>_<role>.pdf (2 pages, ...)`. Any page count other than 2 is a failure that must be fixed before presenting to the user.
+Expected output: `Output written on main_<company>_<role>.pdf (<CV_PAGES> pages, ...)`. Any other page count is a failure that must be fixed before presenting to the user.
+
+**Australia:** see `10-market-au.md` § CV conventions.
 
 ## Document Structure
 
@@ -202,7 +204,7 @@ Wherever the CV names a verifiable artifact - a public project, a hackathon entr
 After writing the CV and before presenting to the user, always compile and visually inspect the PDF. Iterate until the layout is clean. Workflow:
 
 1. Run `lualatex -interaction=nonstopmode main_<company>_<role>.tex`
-2. Check the output page count: must be exactly 2
+2. Check the output page count: must be exactly `<CV_PAGES>`. Layout is measured by `/apply` Step 5b (`verify_layout.py`).
 3. Read the PDF via the Read tool and visually inspect both pages
 4. Check for **orphaned entries**: a `\cventry` title line must never sit alone at the bottom of page 1 with its bullets on page 2
 
@@ -244,9 +246,9 @@ What to check in the extraction:
 - **Reading order.** The stock banking style is single-column, so extraction order matches visual order. Custom templates (via `/add-template`) with sidebars or multi-column layouts can interleave unrelated lines; if extraction order is scrambled, the user is trading ATS compatibility for looks and should be told.
 - **Keyword coverage.** Match the posting's required/preferred terms against the extracted text, in the posting's language. Prefer the posting's exact term over a synonym when it is truthfully applicable - ATS matching is often literal. Never add a keyword the profile does not support.
 
-## Page Budget - Hard 2-Page Limit
+## Page Budget - Hard Page Limit
 
-The CV **must** fit on exactly 2 pages when compiled. Use these content limits as a guide:
+The CV **must** fit exactly `<CV_PAGES>` pages when compiled (`CV pages:` in CLAUDE.md). The limits below, and the page numbers in this file's page-break fixes, assume 2. With 3, give the recent roles more bullets rather than padding, and read "page 2/3" as "the last page / one past it". Use these content limits as a guide:
 
 | Section | Max budget |
 |---------|-----------|

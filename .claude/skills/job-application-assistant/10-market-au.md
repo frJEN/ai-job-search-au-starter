@@ -54,3 +54,12 @@ Rules:
 - Grounding and output follow `08-application-forms.md` unchanged. In addition, state each criterion's word count against its limit, and add a `NOTE TO SELF` mapping each example to the interview questions it invites.
 
 APS postings almost always carry a citizenship condition and often a clearance, so run § Eligibility first.
+
+## CV conventions
+
+- **Leave out** the photo, date of birth or age, marital status, gender, nationality, religion and health. Australian recruiters expect them absent, because anti-discrimination law makes them irrelevant to selection.
+- **Work rights:** add one line under contact details ("Australian citizen", "Permanent resident", "Full working rights") only when it helps. Don't volunteer a restricted visa; § Eligibility decides whether to apply at all.
+- **Length:** 2–3 pages is normal. `CV pages:` in CLAUDE.md sets it.
+- **Referees:** in an Australian-English CV, title the References section "Referees".
+- **Spelling:** Australian English (organise, analyse, licence as a noun). "Program" is standard, including in government usage.
+- "Resume" and "CV" are interchangeable here, so mirror the posting's word in the cover letter.
