@@ -39,7 +39,9 @@ function parseFlags(argv: string[]): Flags {
     // --facet repeats; collect into an array. Everything else is last-wins.
     if (key === "facet") {
       const acc = Array.isArray(flags.facet) ? flags.facet : []
-      if (typeof value === "string") acc.push(value)
+      // Preserve a bare occurrence so validation can reject it instead of
+      // silently dropping the requested filter, even after a valid --facet.
+      acc.push(typeof value === "string" ? value : "")
       flags.facet = acc
     } else {
       flags[key] = value
@@ -77,15 +79,21 @@ USAGE
 
 SEARCH FLAGS
   --query, -q <text>      Keywords (title, skill, role). Full-text; optional.
+                          "a OR b" matches either (uppercase OR, max 5);
+                          a leading title: searches the job title only.
   --jobage <days>         Posted within N days (maps to posted_within_days).
   --page <n>              1-indexed page. Default 1.
   --limit, -n <n>         Results per page (API limit). Default 25.
   --format <fmt>          json (default) | table | plain.
+  --no-description        Skip description hydration for a cheap discovery pass
+                          (results keep every other field; detail fetches the body).
   --description-format    markdown (default) | text | html — how each result's
                           full description is rendered (json output only).
 
 FACET FILTERS (values from freehire.me's controlled vocabularies; comma = OR)
-  --region <codes>        Macro-region: global, eu, us, apac, latam, cis, ...  e.g. --region eu,us
+  --region <codes>        Macro-region: global, eu, uk, north_america, latam, apac,
+                          mena, africa, cis  e.g. --region eu,uk
+                          (a country such as us goes in --country, not here)
   --country <codes>       ISO-3166 alpha-2, e.g. --country DE,GB
   --city <names>          City name(s), e.g. --city Berlin
   --seniority <levels>    junior, middle, senior, staff, principal, lead, ...
@@ -93,6 +101,7 @@ FACET FILTERS (values from freehire.me's controlled vocabularies; comma = OR)
   --skill <names>         Canonical skill(s), e.g. --skill go,kubernetes
   --company <slug>        Company slug (from a result's company_slug).
   --remote <mode>         remote | hybrid | onsite (work_mode facet).
+                          A bare --remote means remote. Comma = OR. Unknown values exit 1.
   --facet <key=value>     Any other facet param (repeatable), e.g. --facet salary_min=100000
 
 DETAIL
@@ -109,13 +118,69 @@ Reads are public (no API key). Source: ${baseUrl()} — a personal project,
 best-effort, no SLA. Override with FREEHIRE_API_URL to use a self-hosted backend.
 `
 
+const WORK_MODES = ["remote", "hybrid", "onsite"] as const
+type WorkMode = (typeof WORK_MODES)[number]
+
+/**
+ * Map --remote to the work_mode facet.
+ * A bare --remote (boolean true) is the documented "remote" shortcut.
+ * Comma-separated values are OR: each item is normalised (`on-site` ->
+ * `onsite`) and re-joined. An unknown item is rejected (the API treats it
+ * as a filter that matches nothing) and `bad` names that item.
+ */
+function parseWorkMode(raw: FlagValue): { value?: string; bad?: string } {
+  if (raw === undefined) return {}
+  if (raw === true) return { value: "remote" }
+  if (typeof raw !== "string" || !raw.trim()) return { bad: String(raw) }
+  const modes: WorkMode[] = []
+  for (const item of raw.split(",")) {
+    const token = item.trim()
+    if (!token) continue
+    switch (token.toLowerCase()) {
+      case "remote":
+        modes.push("remote")
+        break
+      case "hybrid":
+        modes.push("hybrid")
+        break
+      case "onsite":
+      case "on-site":
+        modes.push("onsite")
+        break
+      default:
+        return { bad: token }
+    }
+  }
+  return modes.length > 0 ? { value: modes.join(",") } : { bad: raw.trim() }
+}
+
 function parseIntFlag(name: string, raw: string | boolean | string[]): number | null {
-  const val = parseInt(raw as string, 10)
-  if (isNaN(val)) {
-    process.stderr.write(JSON.stringify({ error: `--${name} must be a number, got "${raw}"`, code: "BAD_ARG" }) + "\n")
+  // Number(), not parseInt(): parseInt truncates, so "--jobage 0.5" became 0,
+  // which fails search.ts's `jobage > 0` guard and silently drops
+  // posted_within_days from the outbound request while exiting 0 (#373).
+  // Whole numbers >= 1 only — the Danish CLIs' z.coerce.number().int().min(1)
+  // contract; 0 is rejected rather than kept as a "no filter" alias.
+  const val = typeof raw === "string" ? Number(raw.trim()) : NaN
+  if (!Number.isInteger(val) || val < 1) {
+    process.stderr.write(
+      JSON.stringify({ error: `--${name} must be a whole number of at least 1, got "${raw}"`, code: "BAD_ARG" }) + "\n",
+    )
     return null
   }
   return val
+}
+
+// Long-form flag names each command accepts (parseFlags resolves the short
+// aliases q/n to these before validation). "help"/"h" pass so `search --help`
+// still prints usage. detail takes no --description-format: it always prints
+// the detail endpoint's HTML body stripped to text, so accepting the flag
+// there ignored it silently.
+const KNOWN_FLAGS: Record<string, Set<string>> = {
+  search: new Set([
+    "query", "category", "city", "company", "country", "facet", "format", "jobage", "limit",
+    "page", "region", "remote", "seniority", "skill", "description-format", "no-description", "help", "h",
+  ]),
+  detail: new Set(["format", "help", "h"]),
 }
 
 async function main(): Promise<number> {
@@ -128,8 +193,45 @@ async function main(): Promise<number> {
     return cmd ? 0 : 1
   }
 
+  // Reject unknown flags instead of silently discarding them: a discarded
+  // filter changes what the search returns with no error (a wrong flag name
+  // once returned an entire portal's database as if it matched the query).
+  // add-portal.md's contract requires a bogus flag to exit 1 with a JSON
+  // error on stderr.
+  const knownFlags = KNOWN_FLAGS[cmd]
+  if (knownFlags) {
+    for (const key of Object.keys(flags)) {
+      if (key === "_" || knownFlags.has(key)) continue
+      process.stderr.write(
+        JSON.stringify({
+          error: `unknown flag --${key} for '${cmd}' - flags are never silently ignored, because a discarded filter changes what the search returns; see --help for the supported flags`,
+          code: "UNKNOWN_FLAG",
+        }) + "\n",
+      )
+      return 1
+    }
+  }
+
   if (cmd === "search") {
-    const fmt = (flags.format as string) || "json"
+    // These options take values, unlike bare --remote and --no-description.
+    // Treating a present-but-empty option as unset silently broadens the query.
+    for (const name of ["query", "company", "country", "region", "city", "seniority", "category", "skill", "description-format"]) {
+      const value = flags[name]
+      if (value !== undefined && (typeof value !== "string" || !value.trim())) {
+        process.stderr.write(
+          JSON.stringify({ error: `--${name} requires a non-empty value`, code: "BAD_ARG" }) + "\n",
+        )
+        return 1
+      }
+    }
+
+    const fmt = flags.format !== undefined ? String(flags.format) : "json"
+    if (!["json", "table", "plain"].includes(fmt)) {
+      process.stderr.write(
+        JSON.stringify({ error: `--format must be one of json|table|plain, got "${fmt}"`, code: "BAD_ARG" }) + "\n",
+      )
+      return 1
+    }
 
     // Validated here rather than server-side: the API answers an unrecognized
     // format with raw HTML instead of an error, so a typo would silently change
@@ -162,7 +264,22 @@ async function main(): Promise<number> {
       }
       const key = kv.slice(0, eq)
       const vals = commaList(kv.slice(eq + 1))
+      if (vals.length === 0) {
+        process.stderr.write(JSON.stringify({ error: `invalid --facet "${kv}", want key=value with at least one value`, code: "BAD_ARG" }) + "\n")
+        return 1
+      }
       facets[key] = (facets[key] ?? []).concat(vals)
+    }
+
+    const parsedRemote = parseWorkMode(flags.remote)
+    if (parsedRemote.bad !== undefined) {
+      process.stderr.write(
+        JSON.stringify({
+          error: `--remote must be one of remote|hybrid|onsite, got "${parsedRemote.bad}"`,
+          code: "BAD_ARG",
+        }) + "\n",
+      )
+      return 1
     }
 
     const opts: SearchOpts = {
@@ -170,8 +287,9 @@ async function main(): Promise<number> {
       jobage: flags.jobage ? parseInt(flags.jobage as string, 10) : 9999,
       page: flags.page ? Math.max(1, parseInt(flags.page as string, 10)) : 1,
       limit: flags.limit ? Math.max(1, parseInt(flags.limit as string, 10)) : 25,
-      format: (["json", "table", "plain"].includes(fmt) ? fmt : "json") as SearchOpts["format"],
+      format: fmt as SearchOpts["format"],
       descriptionFormat: descFmt as DescriptionFormat,
+      includeDescription: flags["no-description"] === undefined,
       regions: commaList(flags.region),
       countries: commaList(flags.country),
       cities: commaList(flags.city),
@@ -179,8 +297,7 @@ async function main(): Promise<number> {
       category: commaList(flags.category),
       skills: commaList(flags.skill),
       company: stringFlag(flags.company),
-      // --remote <mode> takes the given work_mode; a bare --remote means "remote".
-      workMode: stringFlag(flags.remote, "remote"),
+      workMode: parsedRemote.value,
       facets,
     }
     return runSearch(opts)
@@ -192,8 +309,14 @@ async function main(): Promise<number> {
       process.stderr.write(JSON.stringify({ error: "detail requires a <slug|url>", code: "NO_ID" }) + "\n")
       return 1
     }
-    const fmt = (flags.format as string) || "json"
-    const opts: DetailOpts = { id, format: fmt === "plain" ? "plain" : "json" }
+    const fmt = flags.format !== undefined ? String(flags.format) : "json"
+    if (!["json", "plain"].includes(fmt)) {
+      process.stderr.write(
+        JSON.stringify({ error: `--format must be one of json|plain, got "${fmt}"`, code: "BAD_ARG" }) + "\n",
+      )
+      return 1
+    }
+    const opts: DetailOpts = { id, format: fmt as DetailOpts["format"] }
     return runDetail(opts)
   }
 
