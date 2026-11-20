@@ -46,10 +46,13 @@ Run it on your own responsibility.
 bun run .agents/skills/linkedin-search/cli/src/cli.ts search --location "<place>" [flags]
 ```
 
+Query syntax: phrase quoting not honoured; OR not verified.
+
 Key flags:
 - `--location <text>` / `-l <text>` — **required.** A LinkedIn place string, e.g. `"Mumbai, Maharashtra, India"`, `"Berlin, Germany"`, `"London, United Kingdom"`, or `"Remote"`.
 - `--query <text>` / `-q <text>` — keyword search (title, skill, role). Recommended.
 - `--jobage <days>` — posted within N days: `1`, `7`, `14`, `30`. Omit for all postings.
+- `--jobage-minutes <n>` — posted within N minutes (sub-day precision, e.g. `30`). Conflicts with `--jobage` — pass only one.
 - `--remote <mode>` — `remote`, `hybrid`, or `onsite` (workplace-type filter).
 - `--page <n>` — page number (1-indexed, 10 results per page).
 - `--limit <n>` / `-n <n>` — cap total results emitted (client-side).
@@ -63,7 +66,7 @@ bun run .agents/skills/linkedin-search/cli/src/cli.ts detail <id|url> [--format 
 
 `id` is the job ID from `search` results (e.g. `4426311357`). You may also pass a full
 LinkedIn `jobs/view/...` URL or a `urn:li:jobPosting:...` URN. Returns the full description,
-seniority, employment type, job function, industries, and apply link.
+seniority, employment type, job function, and industries.
 
 ## Usage examples
 
@@ -76,6 +79,9 @@ bun run .agents/skills/linkedin-search/cli/src/cli.ts search -q "product manager
 
 # Any role, fully remote
 bun run .agents/skills/linkedin-search/cli/src/cli.ts search -q "paralegal" -l "Remote" --format table
+
+# Engineer roles, remote, posted in the last 30 minutes
+bun run .agents/skills/linkedin-search/cli/src/cli.ts search -q "engineer" -l "Remote" --jobage-minutes 30 --format table
 
 # Full details for a specific job
 bun run .agents/skills/linkedin-search/cli/src/cli.ts detail 4426311357 --format plain

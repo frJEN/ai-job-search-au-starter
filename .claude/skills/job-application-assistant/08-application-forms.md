@@ -17,6 +17,7 @@ Trigger it whenever a posting or portal asks for any of:
 - A short pitch under a hard character limit ("stand out in 140 characters", "why you, in one sentence")
 - Motivation questions ("why this company", "why this program")
 - Competency questions with a word cap ("describe a time you…", 200 words)
+- **Australian public-sector selection criteria or a "pitch"**: always offer these. The method is in `10-market-au.md` § Public-sector applications.
 
 ## The rule that governs everything here
 
